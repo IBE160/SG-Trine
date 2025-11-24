@@ -44,3 +44,16 @@ next-env.d.ts
 
 
 #logging
+
+# Recommended Python additions:
+__pycache__/
+*.py[cod]
+*.pyo
+.python-version
+venv/
+.env
+secrets/
+# JetBrains IDEs
+.idea/
+# VS Code
+.vscode/

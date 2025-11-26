@@ -8,29 +8,29 @@
 
 ## Fase 0
 
-- [x] /run-agent-task analyst *workflow-init
-  - [x] File: bmm-workflow-status.yaml
-- [x] Brainstorming
-  - [x] /run-agent-task analyst *brainstorm "Root Cause Analysis and Solution Design for Player Inactivity"
-    - [x] File: brainstorming-session-results-date.md
-  - [x] /run-agent-task analyst *brainstorm "User Flow Deviations & Edge Cases"
-    - [x] File: brainstorming-session-results-date.md
-  - [x] /run-agent-task analyst *brainstorm "Brainstorm what it means to have a paid user"
-    - [x] File: brainstorming-session-results-date.md
+-  [ ] /run-agent-task analyst *workflow-init
+  -  [ ] File: bmm-workflow-status.yaml
+-  [ ] Brainstorming
+  -  [ ] /run-agent-task analyst *brainstorm "Root Cause Analysis and Solution Design for Player Inactivity"
+    -  [ ] File: brainstorming-session-results-date.md
+  -  [ ] /run-agent-task analyst *brainstorm "User Flow Deviations & Edge Cases"
+    -  [ ] File: brainstorming-session-results-date.md
+  -  [ ] /run-agent-task analyst *brainstorm "Brainstorm what it means to have a paid user"
+    -  [ ] File: brainstorming-session-results-date.md
 - [ ] Research
-  - [x] /run-agent-task analyst *research "Which AI library should we use for orchestrating LLM interactions?"
-    - [x] File: research-technical-date.md
-- [x] Product Brief
-  - [x] /run-agent-task analyst *product-brief "Read the two brainstorming sessions the research session and the @proposal.md file, and create a product brief for the project."
-    - [x] File: product-brief.md
+  -  [ ] /run-agent-task analyst *research "Which AI library should we use for orchestrating LLM interactions?"
+    -  [ ] File: research-technical-date.md
+-  [ ] Product Brief
+  -  [ ] /run-agent-task analyst *product-brief "Read the two brainstorming sessions the research session and the @proposal.md file, and create a product brief for the project."
+    -  [ ] File: product-brief.md
 
 ## Fase 1
 
 - [ ] Planning
-  - [x] /run-agent-task pm *prd
-    - [x] File: PRD.md
-  - [x] /run-agent-task pm *validate-prd
-    - [x] File: validation-report-date.md
+  -  [ ] /run-agent-task pm *prd
+    -  [ ] File: PRD.md
+  -  [ ] /run-agent-task pm *validate-prd
+    -  [ ] File: validation-report-date.md
   - [ ] /run-agent-task ux-designer *create-ux-design {prompt / user-input-file}
     - [ ] File: ux-design-specification.md
     - [ ] File: ux-color-themes.html

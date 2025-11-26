@@ -26,11 +26,16 @@ The project’s goal is not to compete with large commercial apps, but to implem
 
 Users do not need technical experience. The interface must be simple enough for anyone to use without a tutorial.
 
+### Designing for ADHD Users
+In addition to being a general-purpose to-do app, "Prioritize" will be specifically designed to be helpful for users with ADHD. Many of its core AI features directly address challenges with executive functions like task initiation, prioritization, and time perception. The goal is to create a tool that reduces overwhelm and provides a clear, focused path forward.
+
 ## Core Functionality (MVP)
 
 ### Must Have
 - Create, edit, and delete tasks
-- Tasks stored locally or in a simple backend
+- Ability to mark tasks as complete
+- Reorder tasks
+- Tasks stored in a simple backend
 - AI-generated smart labels (e.g., “urgent”, “work”, “personal”)
 - AI-generated priority suggestions
 - Filter tasks by smart labels
@@ -38,15 +43,16 @@ Users do not need technical experience. The interface must be simple enough for 
 
 ### Should Have (if time allows)
 - Light/Dark mode
-- Ability to mark tasks as complete
-- Reorder tasks
 - Task search
+- AI suggestions for breaking down tasks into steps
+- Daily summary / “Today” view as default
+- AI-Generated Time Estimates (e.g., "Approx. 15 mins")
 
 ### Nice to Have (optional)
-- AI suggestions for breaking down tasks into steps
-- Daily summary (“Here are your top 3 tasks today…”)
+- “Just Start Here” button to launch the single most important task
+- Integrated visual timers (e.g., Pomodoro)
 - Scheduling tasks for specific days
-- Reminders
+- Reminders (Smart, gentle nudges)
 
 ## Technical Scope
 
@@ -75,7 +81,7 @@ Users do not need technical experience. The interface must be simple enough for 
 - **ORM**: SQLAlchemy for database operations and type safety
 - **Database Migrations**: Alembic for version-controlled schema changes
 - **AI Integration**:
-  - Gemini 2.5 pro for AI player decisions and question generation
+  - Gemini 2.5 pro for AI-powered task categorization and priority suggestions
   - Custom prompt engineering for consistent AI behavior
   - Fallback logic for API failures
 - **API Documentation**: FastAPI automatic OpenAPI/Swagger documentation
@@ -84,6 +90,15 @@ Users do not need technical experience. The interface must be simple enough for 
 - **Deployment**: Vercel (FastAPI supports Vercel deployment)
 
 **API Architecture**: RESTful API design with versioning (/api/v1/) and clear resource-oriented endpoints. Supabase Realtime for live game updates instead of WebSockets.
+
+### Data Model
+- **Task**: 
+  - `id`: string (UUID)
+  - `description`: string
+  - `is_completed`: boolean
+  - `ai_labels`: string[] (e.g., ["work", "urgent"])
+  - `ai_priority`: number (e.g., 1-4)
+  - `created_at`: timestamp
 
 
 Complex features like user authentication or multi-user systems are out of scope for the MVP.

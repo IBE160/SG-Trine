@@ -10,13 +10,9 @@
 
 -  [x] /run-agent-task analyst *workflow-init
   -  [x] File: bmm-workflow-status.yaml
--  [ ] Brainstorming
-  -  [ ] /run-agent-task analyst *brainstorm "I want to brainstorm my @proposal.md" for this project"
-    -  [ ] File: brainstorming-session-results-date.md
-  -  [ ] /run-agent-task analyst *brainstorm "User Flow Deviations & Edge Cases"
-    -  [ ] File: brainstorming-session-results-date.md
-  -  [ ] /run-agent-task analyst *brainstorm "Brainstorm what it means to have a paid user"
-    -  [ ] File: brainstorming-session-results-date.md
+-  [x ] Brainstorming
+  -  [x ] /run-agent-task analyst *brainstorm "I want to brainstorm my @proposal.md" for this project"
+    -  [x] File: brainstorming-session-results-date.md
 - [ ] Research
   -  [ ] /run-agent-task analyst *research "Which AI library should we use for orchestrating LLM interactions?"
     -  [ ] File: research-technical-date.md

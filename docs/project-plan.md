@@ -11,7 +11,7 @@
 -  [x] /run-agent-task analyst *workflow-init
   -  [x] File: bmm-workflow-status.yaml
 -  [ ] Brainstorming
-  -  [ ] /run-agent-task analyst *brainstorm "Root Cause Analysis and Solution Design for Player Inactivity"
+  -  [ ] /run-agent-task analyst *brainstorm "I want to brainstorm my @proposal.md" for this project"
     -  [ ] File: brainstorming-session-results-date.md
   -  [ ] /run-agent-task analyst *brainstorm "User Flow Deviations & Edge Cases"
     -  [ ] File: brainstorming-session-results-date.md

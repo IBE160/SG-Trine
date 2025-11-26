@@ -16,9 +16,9 @@
 - [x ] Research
   -  [x ] /run-agent-task analyst *research "How can this be done efficiently?"
     -  [x ] File: research-technical-date.md
--  [ ] Product Brief
-  -  [ ] /run-agent-task analyst *product-brief "Read the two brainstorming sessions the research session and the @proposal.md file, and create a product brief for the project."
-    -  [ ] File: product-brief.md
+-  [x ] Product Brief
+  -  [x ] /run-agent-task analyst *product-brief "Read the brainstorming session, the research session and the @proposal.md file, and create a product brief for the project."
+    -  [x ] File: product-brief.md
 
 ## Fase 1
 

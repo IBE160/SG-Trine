@@ -79,7 +79,14 @@ No specific applications were provided for inspiration. This presents a unique o
 
 ### 3.1 Color System
 
-{{visual_foundation}}
+**Chosen Theme:** Refined Focus (Working Direction)
+
+This theme has been selected as the preliminary visual foundation. It is subject to refinement as the design progresses into mockups and prototypes.
+
+*   **Palette:** The core of this theme is a professional, neutral grayscale foundation, which creates a calm, distraction-free environment. A muted, trustworthy blue is used as the primary action color to guide the user, while a reassuring green is reserved exclusively for success and completion feedback.
+*   **Light/Dark Mode:** The application will support both Light and Dark modes to accommodate user preference and reduce eye strain.
+*   **Typography:** The typography will be clean, simple, and highly readable, leveraging the default font system provided by the chosen design system (shadcn/ui) which is optimized for UI clarity.
+*   **Spacing:** A consistent spacing system (based on a 4px or 8px grid) will be used to create a sense of order and rhythm, reducing visual clutter and enhancing the feeling of calm and control.
 
 **Interactive Visualizations:**
 

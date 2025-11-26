@@ -143,10 +143,7 @@ workflow_status:
     name: "Planning"
     required: true
     workflows:
-      - id: "prd"
-        agent: "pm"
-        command: "prd"
-        status: "pending"
+        status: "docs/prd.md"
   - phase: 2
     name: "Solutioning"
     required: true

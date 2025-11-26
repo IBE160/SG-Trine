@@ -13,9 +13,9 @@
 -  [x ] Brainstorming
   -  [x ] /run-agent-task analyst *brainstorm "I want to brainstorm my @proposal.md" for this project"
     -  [x] File: brainstorming-session-results-date.md
-- [ ] Research
-  -  [ ] /run-agent-task analyst *research "Which AI library should we use for orchestrating LLM interactions?"
-    -  [ ] File: research-technical-date.md
+- [x ] Research
+  -  [x ] /run-agent-task analyst *research "How can this be done efficiently?"
+    -  [x ] File: research-technical-date.md
 -  [ ] Product Brief
   -  [ ] /run-agent-task analyst *product-brief "Read the two brainstorming sessions the research session and the @proposal.md file, and create a product brief for the project."
     -  [ ] File: product-brief.md

@@ -8,8 +8,8 @@
 
 ## Fase 0
 
--  [ ] /run-agent-task analyst *workflow-init
-  -  [ ] File: bmm-workflow-status.yaml
+-  [x] /run-agent-task analyst *workflow-init
+  -  [x] File: bmm-workflow-status.yaml
 -  [ ] Brainstorming
   -  [ ] /run-agent-task analyst *brainstorm "Root Cause Analysis and Solution Design for Player Inactivity"
     -  [ ] File: brainstorming-session-results-date.md

@@ -80,7 +80,8 @@ Based on our brainstorming session, the following features will be incorporated 
 #### AI-Powered Assistance
 *   **AI Task Optimization:** The AI will identify opportunities for efficiency. For example, if "Walk the dog" and "Take out the trash" are on the list, it might suggest doing them at the same time.
 *   **AI Time Prediction:** The AI will provide an estimated time to complete for both individual tasks and the entire list.
-*   **AI Habit Learning & Guided Routines:** Over time, the AI will learn the user's habits. This powers two key features:
+*   **AI Habit Learning & Guided Routines:** Over time, the AI will learn the user's habits. This powers three key features:
+    *   **AI Task Suggestion:** By recognizing patterns in the user's task input, the AI can proactively suggest common tasks or next logical steps (e.g., if "clean kitchen" is common, suggest "tidy up apartment").
     *   **Proactive Suggestions:** The dashboard will proactively suggest tasks or lists (e.g., "It's Tuesday, time for laundry?").
     *   **Guided Sessions:** A "Morning Briefing" will guide the user through the "Plan My Day" process, while an "Evening Review" will help them reflect on their accomplishments.
 *   **Smart Sorting Options:** While the AI has a default sorting logic, the user can re-sort their list at any time based on:

@@ -23,7 +23,7 @@ _Generated using BMad Method - Create UX Design Workflow v1.0_
 
 **Chosen Design System:** shadcn/ui
 
-**Rationale:** shadcn/ui is an ideal choice for this project due to its modern approach, seamless integration with Tailwind CSS and Next.js, and strong focus on accessibility. Its "copy-paste" philosophy grants full control over component customization, allowing for a unique brand identity while leveraging high-quality, pre-built components. This accelerates development while ensuring a clean, minimal, and highly functional user interface that aligns with the project's goal of reducing overwhelm and fostering a sense of calm and control. It provides an excellent balance of speed and customizability, making it perfect for creating a distinct and user-friendly application.
+**Rationale:** After a collaborative review of several modern UI libraries, **shadcn/ui was selected with the user's input** as the ideal choice for this project. Its modern approach, seamless integration with Tailwind CSS and Next.js, and strong focus on accessibility were key factors in this decision. Its "copy-paste" philosophy grants full control over component customization, allowing for a unique brand identity while leveraging high-quality, pre-built components. This accelerates development while ensuring a clean, minimal, and highly functional user interface that aligns with the project's goal of reducing overwhelm and fostering a sense of calm and control. It provides an excellent balance of speed and customizability, making it perfect for creating a distinct and user-friendly application.
 
 ---
 
@@ -117,9 +117,9 @@ Based on our brainstorming session, the following features will be incorporated 
 
 ### 3.1 Color System
 
-**Chosen Theme:** Refined Focus (Working Direction)
+**Chosen Theme:** Refined Focus
 
-This theme has been selected as the preliminary visual foundation. It is subject to refinement as the design progresses into mockups and prototypes.
+Following a review of several theme options presented in the `ux-color-themes.html` visualizer, the user selected the **Refined Focus** theme as the visual foundation for the application.
 
 *   **Palette:** The core of this theme is a professional, neutral grayscale foundation, which creates a calm, distraction-free environment. A muted, trustworthy blue is used as the primary action color to guide the user, while a reassuring green is reserved exclusively for success and completion feedback.
 *   **Light/Dark Mode:** The application will support both Light and Dark modes to accommodate user preference and reduce eye strain.
@@ -139,6 +139,8 @@ This theme has been selected as the preliminary visual foundation. It is subject
 ### 4.1 Chosen Design Approach
 
 **Design Direction: The Proactive Dashboard**
+
+After exploring 6-8 different design mockups in the `ux-design-directions.html` showcase, the user chose **The Proactive Dashboard** as the definitive design direction. The user's feedback highlighted a preference for its clean, proactive, and focused approach, which aligns perfectly with the goal of reducing overwhelm.
 
 This design direction centers on a smart dashboard that acts as the user's command center, combined with a focused, single-task view to minimize overwhelm. It is designed to be proactive, guiding the user rather than waiting for them to act.
 
@@ -454,9 +456,9 @@ This section provides high-level technical guidance to facilitate the developmen
 
 ### Related Documents
 
-- Product Requirements: `{{prd_file}}`
-- Product Brief: `{{brief_file}}`
-- Brainstorming: `{{brainstorm_file}}`
+- Product Requirements: `docs/prd.md`
+- Product Brief: `product-brief-2025-11-26.md`
+- Brainstorming: `brainstorming-session-results-2025-11-26.md`
 
 ### Core Interactive Deliverables
 

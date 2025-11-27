@@ -260,6 +260,28 @@ After the plan is created, the app transitions to a focused view, showing only t
     *   The "Shared With You" widget on the user's dashboard might show this recent activity.
     *   Inside the shared list, the "Book flights" task is now marked as complete.
 
+#### User Journey: "Quick Task" (Adding a Task on the Fly)
+
+**Goal:** User quickly adds an urgent or new task without disrupting their current workflow, with intelligent prioritization.
+
+**Steps:**
+
+1.  **Initiation (Quick Add Button):**
+    *   From anywhere in the app (Dashboard or Focused Task View), user taps a persistent "Quick Add" (+) button.
+
+2.  **Task Input with Smart List Selection:**
+    *   A minimalist input field appears. User types: "Call back Mom."
+    *   A small, unobtrusive button next to the input field displays "Add to: Today."
+    *   If the user wishes to add it to a different list (e.g., "Family Chores"), they can tap "Add to: Today" to select an alternative list from a dropdown. Otherwise, it defaults to the current day's plan.
+
+3.  **AI Prioritization & Injection:**
+    *   User taps "Add" or hits Enter.
+    *   The AI instantly processes the task, recognizes its potential urgency ("Call back Mom"), and intelligently injects it into the current day's "Plan My Day" list at the most appropriate priority level.
+
+4.  **Confirmation & Focused View:**
+    *   A subtle confirmation appears: "'Call back Mom' has been added to your day."
+    *   If the user is in the Focused Task View, and "Call back Mom" is the next priority, it smoothly slides into focus. Otherwise, it will appear in sequence later.
+
 ---
 
 ## 6. Component Library

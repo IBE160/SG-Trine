@@ -284,13 +284,68 @@ After the plan is created, the app transitions to a focused view, showing only t
     *   A subtle confirmation appears: "'Call back Mom' has been added to your day."
     *   If the user is in the Focused Task View, and "Call back Mom" is the next priority, it smoothly slides into focus. Otherwise, it will appear in sequence later.
 
+#### User Journey: "Settings" (Configuring App Preferences)
+
+**Goal:** User efficiently accesses and customizes app preferences, such as language and feature toggles.
+
+**Steps:**
+
+1.  **Accessing Settings:**
+    *   From the "Proactive Dashboard," user taps on their profile icon (or a dedicated gear/settings icon) to open the "Settings" screen.
+
+2.  **Navigating Categories:**
+    *   The Settings screen displays a clear list of categories: "General," "AI & Automation," "Notifications," "Account," etc.
+    *   User taps on a category to view its specific settings (e.g., "AI & Automation").
+
+3.  **Changing a Setting (Toggle Example):**
+    *   Within "AI & Automation," user sees a setting: "Enable Location-Based Travel Time," which is currently toggled "On."
+    *   User taps the toggle to switch it "Off."
+    *   A subtle visual confirmation (e.g., toggle animation, brief checkmark) indicates the change is saved automatically.
+
+4.  **Changing a Setting (Selection Example):**
+    *   User navigates back to "General" settings.
+    *   User taps on "Language" which currently shows "English."
+    *   A dropdown or new screen appears with a list of available languages. User selects "Norsk."
+    *   The app interface immediately updates to the selected language, and the change is saved automatically.
+
 ---
 
 ## 6. Component Library
 
 ### 6.1 Component Strategy
 
-{{component_library_strategy}}
+## 6. Component Library
+
+### 6.1 Component Strategy
+
+The application will leverage a modular component-based architecture, utilizing the chosen `shadcn/ui` design system as a foundation. This strategy promotes reusability, consistency, and accelerates development. Key components include:
+
+#### 1. Buttons
+*   **Primary Action Button:** For critical user actions (e.g., "Plan My Day," "Go!").
+*   **Secondary Button:** For less prominent actions (e.g., "View My Lists," "Save Template").
+*   **"Quick Add" (+) Button:** A persistent, easily accessible button for adding tasks on the fly.
+*   **Icon Buttons:** For contextual actions like "Share," "Invite," "Assign," "Attach Photo," etc.
+
+#### 2. Input Fields
+*   **Standard Text Input:** For adding tasks, editing details, and search.
+*   **Search/Filter Field:** For navigating lists and tasks efficiently.
+
+#### 3. Cards & Containers
+*   **Dashboard Widget Card:** Modular cards to display dynamic content on the "Proactive Dashboard" (e.g., Today's Progress, Calendar Event, Shared Activity).
+*   **Focused Task Card:** The prominent, full-screen card for the single-task view, displaying task details and controls.
+*   **Task List Item:** A component for displaying individual tasks within a list, including checkboxes, title, and other relevant metadata.
+
+#### 4. Visualizations & Feedback
+*   **"Charging Battery" Progress Bar:** A unique, non-stressful visual element for displaying task and overall list progress.
+*   **Notification Banners/Toasts:** For delivering smart nudges, reminders, and confirmations (e.g., "Laundry finished," "Task assigned").
+*   **Loading Indicators:** Subtle animations for AI processing or data fetching (e.g., during "Plan My Day" generation).
+
+#### 5. Navigation & Selection
+*   **Dashboard Navigation Elements:** Buttons or links to access main sections like "My Lists," "Settings," etc.
+*   **Dropdown Menus:** For selecting sorting options, choosing a list for Quick Add, or other selections.
+*   **Checkboxes:** For marking tasks or sub-tasks as complete.
+*   **Toggles/Switches:** For enabling/disabling features in Settings (e.g., "Location-Based Travel Time").
+*   **Profile/Avatar Component:** For user identification, especially in collaboration features.
 
 ---
 

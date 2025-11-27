@@ -231,6 +231,35 @@ After the plan is created, the app transitions to a focused view, showing only t
     *   Upon completing all tasks, the dashboard's "Today's Progress" widget shows 100%.
     *   An "Evening Review" prompt guides the user to reflect on their accomplishments.
 
+#### User Journey: "Collaboration" (Sharing & Assigning)
+
+**Goal:** User seamlessly invites a friend to a list, assigns tasks, and tracks progress collaboratively.
+
+**Steps:**
+
+1.  **Initiation (Sharing a List):**
+    *   From the "Proactive Dashboard," user taps "View My Lists" and selects the "Holiday Planning" list.
+    *   Inside the list view, user taps a "Share" or "Invite" icon.
+
+2.  **Inviting & Onboarding a Collaborator:**
+    *   The app provides options to invite a friend (let's call her "Alex") via email, a direct link, or other messaging apps.
+    *   Alex receives the invitation, and upon accepting, the "Holiday Planning" list appears in her app. If she's a new user, she goes through a quick onboarding process first.
+
+3.  **Assigning Tasks for Clarity:**
+    *   Back in the shared "Holiday Planning" list, the user sees the task "Book flights." They tap to expand its details.
+    *   User taps the "Assign" icon and selects Alex. The task is now clearly marked with Alex's profile picture.
+    *   To avoid confusion, the user then assigns the "Arrange pet sitter" task to themself. It's now marked with their own profile picture, so Alex knows not to work on it.
+
+4.  **Collaborator's Experience:**
+    *   Alex receives a notification: "You've been assigned 'Book flights' on the 'Holiday Planning' list."
+    *   This task now appears in her "Plan My Day" workflow, prioritized according to its deadline.
+    *   When Alex completes "Book flights," she swipes it away in her Focused Task View.
+
+5.  **Tracking Shared Progress:**
+    *   The original user receives a notification: "Alex completed 'Book flights' on 'Holiday Planning'."
+    *   The "Shared With You" widget on the user's dashboard might show this recent activity.
+    *   Inside the shared list, the "Book flights" task is now marked as complete.
+
 ---
 
 ## 6. Component Library

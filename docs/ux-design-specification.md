@@ -182,7 +182,54 @@ After the plan is created, the app transitions to a focused view, showing only t
 
 ### 5.1 Critical User Paths
 
-{{user_journey_flows}}
+## 5. User Journey Flows
+
+### 5.1 Critical User Paths
+
+#### User Journey: "Plan My Day" (Core Workflow)
+
+**Goal:** User transforms a brain-dump of tasks into an organized, prioritized, and actionable daily plan with AI assistance.
+
+**Steps:**
+
+1.  **Initiation (Proactive Dashboard):**
+    *   User opens the app and is greeted by the "Proactive Dashboard."
+    *   A "Morning Briefing" widget or notification prompts: "Good morning, [User Name]! Ready to plan your day?"
+    *   User taps the prominent **"Plan My Day"** button.
+
+2.  **Task Input:**
+    *   The app presents a clean, distraction-free screen for task input.
+    *   User can freely type tasks (e.g., "laundry," "doctor's appointment 10 AM," "finish report"), choose a saved template (e.g., "Weekly Chores"), or utilize "Import from Photo" for handwritten lists.
+    *   User taps **"Go!"** to initiate AI processing.
+
+3.  **AI Processing & Feedback:**
+    *   A brief, calming animation (e.g., subtle pulsing light, gentle loading bar) is displayed with a message like "Organizing your day..." or "Prioritizing your tasks..."
+    *   Behind the scenes, the AI:
+        *   Breaks down complex tasks (e.g., "laundry" -> "start machine," "transfer to dryer," "fold clothes").
+        *   Estimates time for each task and sub-task.
+        *   Identifies time-sensitive events (e.g., "doctor's appointment 10 AM") and marks them.
+        *   Learns user habits for future suggestions.
+        *   Optimizes task order for efficiency.
+
+4.  **Transition to Focused Task View:**
+    *   Upon completion, the screen smoothly transitions to the "Focused Task View," presenting only the first, highest-priority task (e.g., "Doctor's Appointment").
+    *   The task displays its name, the AI's time estimate (e.g., "45 minutes"), and an empty "charging battery" progress bar.
+
+5.  **Task Interaction & Smart Notifications:**
+    *   User completes the "Doctor's Appointment" and **swipes the task away** to mark it as done.
+    *   The next prioritized task (e.g., "Start Washing Machine") slides into focus.
+    *   While the user is working on other tasks, if "Start Washing Machine" has an associated duration:
+        *   The app sends a gentle, non-intrusive **"Time-Based Notification"** when the laundry cycle is estimated to be complete: *"Your laundry should be finishing up. Ready to hang it up soon?"*
+
+6.  **Progress & Navigation:**
+    *   The "charging battery" for the individual task fills up as the user progresses, turning green upon completion. The overall "Today's Progress" widget on the Dashboard updates.
+    *   User can tap on the focused task to expand it and view/add manual sub-tasks, attach photos, or access other details.
+    *   User can scroll down to briefly view the full, de-emphasized list of remaining tasks, but the default focus remains on the current task.
+
+7.  **Completion & Evening Review:**
+    *   User continues working through the day's tasks in the Focused Task View.
+    *   Upon completing all tasks, the dashboard's "Today's Progress" widget shows 100%.
+    *   An "Evening Review" prompt guides the user to reflect on their accomplishments.
 
 ---
 

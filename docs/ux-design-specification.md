@@ -353,7 +353,35 @@ The application will leverage a modular component-based architecture, utilizing 
 
 ### 7.1 Consistency Rules
 
-{{ux_pattern_decisions}}
+## 7. UX Pattern Decisions
+
+### 7.1 Consistency Rules
+
+To ensure a cohesive and intuitive user experience, the following interaction patterns will be applied consistently across the application:
+
+#### 1. Feedback Patterns
+*   **Success:** A green checkmark icon will briefly appear to confirm successful actions (e.g., adding a task, saving a setting).
+*   **Error:** A non-intrusive alert message will be displayed to inform the user of a problem (e.g., "AI could not understand task").
+*   **Loading:** A simple, subtle loading animation (e.g., a gently pulsing light or a minimalist spinner) will indicate when the AI is processing or data is being loaded.
+*   **Notifications & Nudges:** All smart notifications will be delivered as subtle, dismissible banners or toasts at the top or bottom of the screen, designed to inform without overwhelming.
+
+#### 2. Navigation Patterns
+*   **Main Navigation:** A hamburger menu (three stripes icon) in the top-left corner will serve as the primary navigation hub, revealing links to the Dashboard, My Lists, Settings, etc.
+*   **Settings Access:** A gear icon in the top-right corner will provide direct access to the Settings screen.
+*   **Mobile Gesture Navigation:** On mobile devices, users will be able to swipe from the edges of the screen as an alternative way to access the main navigation menu and settings.
+*   **Focused View Navigation:** Within the "Focused Task View," users will swipe up or down to navigate between tasks.
+
+#### 3. Input & Editing Patterns
+*   **Quick Add:** A persistent, floating action button (+) will be available for quickly adding new tasks.
+*   **Editing:** A pen icon will appear next to editable elements (like task titles or list names) when hovered over or tapped, indicating that they can be modified.
+
+#### 4. Collaboration Patterns
+*   **Assignment Indicator:** Assigned tasks will display the name and/or profile picture of the assignee in a muted color next to the task title.
+*   **Notification Center:** All collaboration-related events (invitations, assignments, completions) will generate a notification that is also stored in a dedicated "Notifications" log or feed for later review.
+
+#### 5. Progress Visualization Patterns
+*   **Task-Level Progress:** The "charging battery" visualization will be displayed next to the title of every task and sub-task that has multiple steps.
+*   **Overall Progress:** An aggregate "charging battery" for the entire list or day's plan will be displayed prominently at the top of the list view and on the "Today's Progress" dashboard widget.
 
 ---
 
@@ -361,7 +389,26 @@ The application will leverage a modular component-based architecture, utilizing 
 
 ### 8.1 Responsive Strategy
 
-{{responsive_accessibility_strategy}}
+## 8. Responsive Design & Accessibility
+
+### 8.1 Responsive Strategy
+
+The application will be designed and developed with a strong emphasis on responsiveness and accessibility to ensure an inclusive and high-quality user experience across all devices and for all users.
+
+#### 1. Responsive Design
+*   **Mobile-First Approach:** Development will prioritize the mobile experience first, ensuring core functionality and usability are optimized for smaller screens before scaling up to larger viewports.
+*   **Adaptive Layouts:**
+    *   **Dashboard:** Widgets will dynamically reflow from a vertical, single-column stack on mobile to a multi-column grid layout on tablet and desktop screens.
+    *   **Focused Task View:** The single-task view will maintain its primary focus, adapting its spacing and element arrangement to utilize screen real estate effectively on larger displays without adding unnecessary clutter.
+*   **Touch-Friendly Targets:** All interactive elements (buttons, checkboxes, toggles) will adhere to minimum touch target sizes (e.g., 44x44 CSS pixels) to ensure ease of use on touch-enabled devices.
+
+#### 2. Accessibility (A11y)
+*   **WCAG 2.1 Level AA Compliance:** The app aims to meet the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards, ensuring a broad level of accessibility for users with various disabilities.
+*   **Semantic HTML:** Proper semantic HTML5 elements will be used to structure content, providing clear meaning and navigability for assistive technologies like screen readers.
+*   **Keyboard Navigation:** All interactive components and navigation elements will be fully operable via keyboard, with clear visual focus indicators to guide users.
+*   **Color Contrast:** The chosen "Refined Focus" color palette will be rigorously tested to ensure all text and essential UI elements meet minimum contrast ratio requirements, enhancing readability for users with visual impairments.
+*   **ARIA Roles & Properties:** ARIA (Accessible Rich Internet Applications) attributes will be implemented where necessary to convey additional semantic meaning and interactive states to assistive technologies, particularly for custom components (e.g., the "charging battery" progress indicator).
+*   **Alternative Text for Images:** All non-decorative images will include descriptive alternative text (`alt` attributes) for screen reader users.
 
 ---
 

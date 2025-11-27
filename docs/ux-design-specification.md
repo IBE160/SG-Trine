@@ -47,17 +47,17 @@ No specific applications were provided for inspiration. This presents a unique o
 
 ### 2.4 Novel UX Patterns
 
-**Pattern Name:** AI-Powered Holistic Task Scheduling
+**Pattern Name:** "Plan My Day" (Core Workflow)
 
-**User Goal:** To have a chaotic list of tasks transformed into a manageable, optimized, and actionable plan for the day.
+**User Goal:** To transform a chaotic brain-dump of tasks into a manageable, optimized, and actionable plan for the day, with minimal effort.
 
-**Trigger:** A single, global "Go" button that the user presses after inputting all their tasks for a given period (e.g., the day).
+**Trigger:** The user selects the primary "Plan My Day" action from the dashboard. This can be initiated from a blank slate, a saved template, or a photo of a list.
 
-**Feedback:** Upon pressing "Go," the app will provide clear feedback that the AI is working, such as a loading animation or a message like "Optimizing your day...". The original, unstructured list will then transform into a new, reordered list, with complex tasks broken down into their constituent sub-steps and intelligently interleaved with other tasks.
+**Feedback:** The app provides a simple interface for the user to list all their tasks. Once they are done and press "Go," the app provides clear feedback that the AI is working (e.g., "Organizing your day..."). The view then transforms into the "Focused Task View," showing the first prioritized task.
 
-**Success:** The result is a single, chronological, and manageable to-do list. Success is evident when the user sees a clear, logical plan they can follow step-by-step. The user will have the ability to edit, reorder, or remove any AI-generated sub-steps, giving them ultimate control.
+**Success:** The result is a single, chronological, and manageable to-do list, presented one task at a time. The user has the ability to edit, reorder, or remove any AI-generated sub-steps, and the AI learns from these changes.
 
-**Errors:** If the AI encounters a task it doesn't understand, it will leave the task as-is in the list, perhaps with a small icon or note indicating it needs clarification (e.g., a "?"). It will not invent incorrect sub-steps. The app will proceed to organize the tasks it *does* understand, ensuring the user is never blocked.
+**Errors:** If the AI encounters a task it doesn't understand, it will place it in the list with a prompt for the user to clarify. It will not invent incorrect sub-steps, ensuring the user is never blocked. The rest of the list will be organized as expected.
 
 #### 2.4.1 Deep Dive
 
@@ -72,6 +72,37 @@ No specific applications were provided for inspiration. This presents a unique o
 *   **Guidance:** The application will provide gentle, intelligent guidance. It will proactively organize the user's day but always allow the user to override or edit the AI's suggestions. The goal is to be a helpful assistant, not a rigid commander.
 *   **Flexibility:** The user has ultimate control. While the AI provides a strong default, the user must be able to easily edit, add, remove, and reorder tasks and sub-tasks. The app must be flexible enough to accommodate the user's changing plans.
 *   **Feedback:** Feedback will be subtle, calm, and informative. It will confirm that an action has been taken without being distracting. No celebratory or loud notifications. The focus is on maintaining a calm and controlled environment.
+
+### 2.6 Feature Enhancements
+
+Based on our brainstorming session, the following features will be incorporated into the "Proactive Dashboard" design:
+
+#### AI-Powered Assistance
+*   **AI Task Optimization:** The AI will identify opportunities for efficiency. For example, if "Walk the dog" and "Take out the trash" are on the list, it might suggest doing them at the same time.
+*   **AI Time Prediction:** The AI will provide an estimated time to complete for both individual tasks and the entire list.
+*   **AI Habit Learning & Guided Routines:** Over time, the AI will learn the user's habits. This powers two key features:
+    *   **Proactive Suggestions:** The dashboard will proactively suggest tasks or lists (e.g., "It's Tuesday, time for laundry?").
+    *   **Guided Sessions:** A "Morning Briefing" will guide the user through the "Plan My Day" process, while an "Evening Review" will help them reflect on their accomplishments.
+*   **Smart Sorting Options:** While the AI has a default sorting logic, the user can re-sort their list at any time based on:
+    *   **Importance:** Deadlines, appointments, etc.
+    *   **Duration:** Longest or shortest tasks first.
+    *   **Energy Level:** High-focus vs. low-focus tasks.
+    *   **Context:** Location-based tasks (e.g., "at home," "errands").
+
+#### Control and Customization
+*   **Manual Sub-task Creation:** Users can always add their own sub-tasks to any item.
+*   **Saved List Templates:** Users can save a list of tasks as a reusable template.
+*   **Photo Attachments:** Users can attach photos to tasks for context or as a reminder.
+
+#### Motivation and Progress
+*   **Task Progress Visualization:** A "charging battery" visual for both the overall list and individual tasks provides a clear and satisfying visualization of progress.
+
+#### Connectivity and Collaboration
+*   **Calendar Integration:** Sync tasks with deadlines to an external calendar.
+*   **Collaboration Suite:**
+    *   **Share Lists:** Easily share any task list with other users.
+    *   **Assign Tasks:** In a shared list, assign specific tasks to different people.
+    *   **Invite Users:** A simple mechanism to invite friends or colleagues to the app.
 
 ---
 
@@ -98,7 +129,43 @@ This theme has been selected as the preliminary visual foundation. It is subject
 
 ### 4.1 Chosen Design Approach
 
-{{design_direction_decision}}
+### 4.1 Chosen Design Approach
+
+**Design Direction: The Proactive Dashboard**
+
+This design direction centers on a smart dashboard that acts as the user's command center, combined with a focused, single-task view to minimize overwhelm. It is designed to be proactive, guiding the user rather than waiting for them to act.
+
+**1. The Dashboard (Main View):**
+Upon opening the app, the user is greeted with a calm, clean dashboard featuring dynamic "widgets" that provide an at-a-glance overview of their day.
+*   **Core Actions:** Prominent but minimal buttons for primary actions like **"Plan My Day"**, "View My Lists," and "Use a Template."
+*   **Proactive AI Suggestions:** The dashboard will feature a section for proactive suggestions from the AI. For example: "It's Monday, time for your weekly review?" or "You have a quiet afternoon, want to tackle this task?".
+*   **Dynamic Widgets:**
+    *   **Today's Progress:** A "charging battery" visual showing the overall completion percentage for the day's tasks.
+    *   **Next Calendar Event:** A small widget that syncs with the user's calendar to show their next appointment.
+    *   **Shared With You:** An activity feed highlighting tasks recently assigned to the user on collaborative lists.
+
+**2. "Plan My Day" (Core Workflow):**
+This is the app's primary and default feature.
+*   **Guided Input:** The user is guided to input all their tasks for the day in a simple, unstructured way. This can be from a blank list, a saved template, or even imported from a photo of a handwritten list.
+*   **AI-Powered Sorting:** After the user is done, the AI automatically sorts the tasks, breaks them down into sub-tasks, adds time estimates, and presents a fully organized plan.
+*   **Smart Sorting Options:** The AI uses a holistic default sorting logic, but the user can choose to re-sort the list by:
+    *   **Importance:** (e.g., deadlines, appointments).
+    *   **Duration:** Longest or shortest tasks first.
+    *   **Energy Level:** Grouping high-focus and low-focus tasks.
+    *   **Context:** Grouping tasks by location (e.g., "at home," "errands").
+
+**3. The Focused Task View:**
+After the plan is created, the app transitions to a focused view, showing only the single, most important task.
+*   **One Task at a Time:** This view is designed to be minimal and calming, helping the user focus on what's next without the distraction of a long list.
+*   **Gesture-Based Navigation:** The user can swipe the task away to mark it as complete and reveal the next one. They can also scroll down to see the full, de-emphasized list if needed.
+*   **"Power-Up" Details:** This view also contains:
+    *   The AI's **time estimate** for the task.
+    *   The task-specific **"charging battery"** progress bar.
+    *   Quick-access buttons to **"add sub-task"** or **"attach photo"**.
+
+**4. Guided Routines:**
+*   **"Morning Briefing":** A daily notification or dashboard state that guides the user through the "Plan My Day" process.
+*   **"Evening Review":** A similar routine in the evening to help the user review their accomplishments and plan for the next day.
 
 **Interactive Mockups:**
 

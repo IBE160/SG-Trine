@@ -89,6 +89,7 @@ Based on our brainstorming session, the following features will be incorporated 
     *   **Duration:** Longest or shortest tasks first.
     *   **Energy Level:** High-focus vs. low-focus tasks.
     *   **Context:** Location-based tasks (e.g., "at home," "errands").
+*   **Location-Based Travel Time:** By default, if a task includes a location (e.g., "Doctor's Appointment at [Address]"), the AI will use the device's location services to calculate travel time and automatically factor it into the schedule. This feature can be disabled in Settings.
 
 #### Smart Notifications & Nudges
 *   **Time-Based Notifications:** The app understands tasks with a duration. If a task like "laundry" is running in the background, the app will send a gentle notification when the time is up, so the user doesn't forget the next step.
@@ -98,6 +99,7 @@ Based on our brainstorming session, the following features will be incorporated 
 *   **Manual Sub-task Creation:** Users can always add their own sub-tasks to any item.
 *   **Saved List Templates:** Users can save a list of tasks as a reusable template.
 *   **Photo Attachments:** Users can attach photos to tasks for context or as a reminder.
+*   **Language Selection:** In Settings, users can select their preferred language for the app interface.
 
 #### Motivation and Progress
 *   **Task Progress Visualization:** A "charging battery" visual for both the overall list and individual tasks provides a clear and satisfying visualization of progress.

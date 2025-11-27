@@ -12,7 +12,8 @@
 Task management is a universal challenge. Many users, particularly those with executive function difficulties like ADHD, find traditional to-do lists overwhelming. These lists often become unstructured "brain dumps" that increase anxiety rather than productivity, making it difficult to prioritize and initiate tasks.
 
 ### Our Solution
-**"Prioritize"** is a minimal, easy-to-use to-do list application that leverages AI to transform a simple task list into a smart, actionable workflow. By automatically categorizing tasks, suggesting priorities, and providing focus-enhancing tools, the app aims to reduce overwhelm and help users achieve their goals more effectively.
+
+**"Prioritize"** is an AI-enhanced smart to-do list application designed around a **"Proactive Dashboard"** that acts as the user's central hub. It leverages AI to transform chaotic task inputs into an organized, prioritized, and actionable daily plan, presented in a focused, single-task view. By providing intelligent sorting, time estimation, habit-based nudges, and collaborative tools, the app aims to significantly reduce overwhelm and help users achieve their goals more effectively and with greater clarity.
 
 For the purpose of the IBE160 course, this project will also serve as a practical demonstration of agent-based development methodologies using the BMAD framework.
 
@@ -28,35 +29,33 @@ For the purpose of the IBE160 course, this project will also serve as a practica
 - Everyday users who feel overwhelmed by complex productivity software and desire a simple, structured system.
 
 ### ADHD User Focus
+
 "Prioritize" is specifically designed to be helpful for users with ADHD. Features are tailored to address common challenges associated with executive dysfunction:
-- **Reducing Overwhelm:** A "Today" view and AI-powered task "chunking" will make long lists manageable.
-- **Aiding Task Initiation:** A "Just Start Here" button will remove decision paralysis.
-- **Addressing Time Blindness:** AI-generated time estimates will help users realistically plan their time.
-- **Enhancing Focus:** A minimalist UI and smart, gentle nudges will help users stay on track.
+*   **Reducing Overwhelm:** The "Proactive Dashboard" provides a calm starting point, while the "Focused Task View" (showing only one task at a time) minimizes visual clutter and decision fatigue.
+*   **Aiding Task Initiation:** The "Plan My Day" workflow removes the cognitive load of organizing and prioritizing. The app tells the user what to do next, making it easier to start.
+*   **Addressing Time Blindness:** AI-generated time estimates and automated travel time calculations help users develop a more realistic perception of how long tasks will take.
+*   **Enhancing Focus & Memory:** Smart, gentle nudges (e.g., for finished laundry or upcoming habits) act as an external working memory, helping users stay on track without being disruptive.
 
 ## 3. Core Features & Scope
 
-### Must-Haves (MVP)
-- Full CRUD (Create, Read, Edit, Delete) functionality for tasks.
-- Ability to mark tasks as complete and reorder them.
-- AI-generated smart labels (e.g., "work," "personal," "urgent").
-- AI-generated priority suggestions.
-- Ability to filter tasks by their smart labels.
-- A clean, minimal, and intuitive user interface.
-- All task data stored in a simple backend (Supabase).
+## 3. Core Features & Scope
 
-### Should-Haves (Post-MVP)
-- A "Today" view as the application's default screen.
-- AI suggestions for breaking down large tasks into smaller sub-steps.
-- AI-generated time estimates for tasks (e.g., "Approx. 15 mins").
-- Light/Dark mode themes.
-- Task search functionality.
+"Prioritize" is designed around an AI-enhanced **"Proactive Dashboard"** that serves as the user's central hub, seamlessly integrating advanced AI capabilities with intuitive controls and collaborative tools.
 
-### Nice-to-Haves (Future Iterations)
-- A "Just Start Here" button to launch the single most important task.
-- Integrated visual timers (e.g., Pomodoro).
-- Smart, gentle nudge reminders.
-- The ability to schedule tasks for specific days.
+### Key Capabilities:
+
+*   **AI-Powered "Plan My Day" Workflow:** The flagship feature that intelligently transforms a user's task input into an organized, prioritized, and time-estimated daily plan, presented in a focused, single-task view.
+*   **Dynamic Dashboard Experience:** Features contextual widgets (e.g., Today's Progress, Next Calendar Event, Shared Activity) and proactive AI suggestions based on user habits.
+*   **Smart Task Management:** Includes manual sub-task creation, AI Task Optimization (merging related tasks), AI Time Prediction, and intelligent sorting options (by importance, duration, energy, context).
+*   **Smart Notifications & Nudges:** Time-based alerts for task dependencies (e.g., "laundry finished") and proactive habit-based reminders (e.g., "pack swimwear for tomorrow's swim").
+*   **Collaboration Suite:** Enables sharing of task lists, assigning tasks to collaborators (or oneself), and tracking shared progress.
+*   **Connectivity & Integrations:** Seamless integration with external calendars and optional location-based travel time calculations for tasks.
+*   **Customization & Control:** Users have full flexibility to edit AI-generated plans, save and reuse list templates (limited in free version), attach photos to tasks, and customize app settings (including language selection).
+*   **Motivation & Progress:** Visual "charging battery" progress indicators for individual tasks and overall daily goals.
+
+### Monetization Strategy:
+
+The app will operate on a **Freemium model** to maintain a calm, ad-free user experience. The free version will offer core "Plan My Day" functionality with limited saved templates. The premium subscription unlocks all advanced AI features, collaboration tools, calendar integration, photo attachments, and unlimited saved templates.
 
 ## 4. Technical Strategy
 

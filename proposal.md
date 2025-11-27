@@ -29,30 +29,16 @@ Users do not need technical experience. The interface must be simple enough for 
 ### Designing for ADHD Users
 In addition to being a general-purpose to-do app, "Prioritize" will be specifically designed to be helpful for users with ADHD. Many of its core AI features directly address challenges with executive functions like task initiation, prioritization, and time perception. The goal is to create a tool that reduces overwhelm and provides a clear, focused path forward.
 
-## Core Functionality (MVP)
+### Core Functionality
 
-### Must Have
-- Create, edit, and delete tasks
-- Ability to mark tasks as complete
-- Reorder tasks
-- Tasks stored in a simple backend
-- AI-generated smart labels (e.g., “urgent”, “work”, “personal”)
-- AI-generated priority suggestions
-- Filter tasks by smart labels
-- Clean, minimal UI
-
-### Should Have (if time allows)
-- Light/Dark mode
-- Task search
-- AI suggestions for breaking down tasks into steps
-- Daily summary / “Today” view as default
-- AI-Generated Time Estimates (e.g., "Approx. 15 mins")
-
-### Nice to Have (optional)
-- “Just Start Here” button to launch the single most important task
-- Integrated visual timers (e.g., Pomodoro)
-- Scheduling tasks for specific days
-- Reminders (Smart, gentle nudges)
+*   **AI-Powered "Plan My Day":** The core feature where users input tasks and the AI automatically organizes, prioritizes, and breaks them down into a manageable, focused plan.
+*   **Focused Task View:** A minimalist, single-task view designed to reduce overwhelm, with gesture-based navigation.
+*   **Proactive Dashboard:** A "command center" main view with dynamic widgets for progress, calendar events, and proactive AI suggestions.
+*   **Smart Sorting Options:** The ability to re-sort tasks by importance, duration, energy level, or context.
+*   **Collaboration Suite:** Share lists, assign tasks, and track progress with other users.
+*   **Advanced AI Assistance:** Includes AI Habit Learning, Time Prediction, Task Optimization, and Smart Notifications.
+*   **Customization & Control:** Manual sub-task creation, saved list templates, and photo attachments.
+*   **Calendar & Location Integration:** Sync with external calendars and use location services for automatic travel time calculation.
 
 ## Technical Scope
 

@@ -416,7 +416,37 @@ The application will be designed and developed with a strong emphasis on respons
 
 ### 9.1 Completion Summary
 
-{{completion_summary}}
+## 9. Implementation Guidance
+
+### 9.1 Technical Considerations and Recommendations
+
+This section provides high-level technical guidance to facilitate the development process, ensuring alignment with the defined UX and feature set.
+
+#### 1. Frontend Development
+*   **Framework:** Next.js (TypeScript) with App Router for server-side rendering and optimal performance, leveraging its component-based architecture.
+*   **UI Library:** `shadcn/ui` (built on Tailwind CSS) for rapid, consistent, and customizable UI development.
+*   **State Management:** Utilize Zustand for lightweight and scalable global state management.
+*   **API Communication:** Use Axios with interceptors for authenticated requests to the backend API.
+*   **Real-time Updates:** Implement real-time capabilities for features like collaboration and notifications (e.g., using WebSockets or Supabase Realtime).
+
+#### 2. Backend Development
+*   **Framework:** FastAPI (Python) for building a high-performance RESTful API, compatible with AI integrations.
+*   **Database:** Supabase (PostgreSQL) for managed database services, user authentication, and real-time features.
+*   **Authentication & Authorization:** Leverage Supabase Auth for user management and implement Row Level Security (RLS) policies for secure data access.
+*   **API Design:** Follow a RESTful API design with versioning and clear resource-oriented endpoints.
+
+#### 3. AI Integration
+*   **AI Models:** Integrate Gemini 2.5 Pro for core AI functionalities (task categorization, prioritization, sub-task breakdown, time estimation, habit learning).
+*   **Prompt Engineering:** Implement robust prompt engineering for consistent AI behavior and results.
+*   **Performance:** Optimize AI call latency to meet the target of <5 seconds for key operations (e.g., "Plan My Day").
+*   **Fallback Logic:** Implement fallback mechanisms for AI API failures to ensure app resilience.
+
+#### 4. General Development Practices
+*   **Modular Architecture:** Maintain a modular, component-driven architecture across both frontend and backend for enhanced maintainability and scalability.
+*   **Comprehensive Testing:** Implement a thorough testing strategy including unit tests (for components/functions), integration tests (for API endpoints), and end-to-end tests (for critical user journeys) to ensure robustness and reliability, especially for AI-driven features.
+*   **Performance Optimization:** Prioritize efficient data fetching, lean component rendering, and optimized resource loading to ensure fast load times and smooth, responsive interactions, aligning with the app's calming user experience.
+*   **Security:** Adhere to industry best practices for data security, user authentication, authorization, and protection of sensitive user data, particularly given the handling of personal tasks, habits, and location information.
+*   **Privacy & Data Handling (GDPR Compliance):** Implement features and practices to ensure GDPR compliance, including explicit user consent for data collection (e.g., location services), a transparent privacy policy, and user controls for data access, rectification, portability, and erasure.
 
 ---
 

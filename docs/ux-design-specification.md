@@ -90,6 +90,10 @@ Based on our brainstorming session, the following features will be incorporated 
     *   **Energy Level:** High-focus vs. low-focus tasks.
     *   **Context:** Location-based tasks (e.g., "at home," "errands").
 
+#### Smart Notifications & Nudges
+*   **Time-Based Notifications:** The app understands tasks with a duration. If a task like "laundry" is running in the background, the app will send a gentle notification when the time is up, so the user doesn't forget the next step.
+*   **Proactive Habit-Based Nudges:** The AI anticipates user needs based on their habits. For example, if the user swims every Monday, the app will send a reminder on Sunday to pack their swimwear.
+
 #### Control and Customization
 *   **Manual Sub-task Creation:** Users can always add their own sub-tasks to any item.
 *   **Saved List Templates:** Users can save a list of tasks as a reusable template.

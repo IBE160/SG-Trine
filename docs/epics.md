@@ -117,21 +117,25 @@ So that I can begin developing and deploying the application efficiently.
 
 **Acceptance Criteria:**
 
-**Given** a new project,
-**When** the setup script is executed,
-**Then** the Next.js frontend, FastAPI backend, and Supabase integration are configured.
+**Given** a new project repository,
+**When** the Next.js frontend is initialized using `npx create-next-app@latest`,
+**And** a Python virtual environment is created in an `api/` directory with `FastAPI`, `uvicorn`, and `supabase-py` installed,
+**Then** the monorepo structure is established locally.
 
-**And** Given a code push to the main branch,
-**When** the CI/CD pipeline runs on Vercel,
-**Then** the application is deployed successfully to a staging environment.
-
-**And** Given the project structure,
-**When** core dependencies are installed,
-**Then** the project is ready for local development.
+**And** Given the project is pushed to a Git provider connected to Vercel,
+**When** the Vercel deployment pipeline runs,
+**Then** the Next.js frontend deploys successfully.
+**And** the FastAPI app in the `api/` directory is successfully deployed as a serverless function.
+**And** a "Hello World" endpoint on the FastAPI function is reachable.
 
 **Prerequisites:** None
 
-**Technical Notes:** Includes repository setup, build system configuration, Vercel deployment pipeline basics, and core dependency installation. Focus on getting a minimal 'hello world' style application deployed end-to-end.
+**Technical Notes (Enhanced):**
+-   **Monorepo Structure:** The project will follow the structure defined in `architecture.md`, with a `nextjs-frontend` directory and a separate `api` directory for the FastAPI backend. For Vercel deployment, the `api` directory will be placed inside the Next.js project root.
+-   **Frontend Setup:** Initialize using the command from the architecture doc: `npx create-next-app@latest nextjs-frontend --typescript --eslint --app --src-dir --import-alias "@/*"`.
+-   **Backend Setup:** The FastAPI application will reside in the `/api` directory to leverage Vercel's serverless function deployment. It will have its own `requirements.txt` and virtual environment.
+-   **Deployment:** Vercel project settings must include all necessary environment variables (Supabase URL/keys, Gemini API Key) as defined in the architecture.
+-   **Verification:** The initial deployment should be a minimal 'hello world' style application to verify the end-to-end connection between the frontend and the deployed serverless backend function.
 
 ### Story 1.2: Secure User Task Data Storage
 
@@ -141,21 +145,26 @@ So that my information is persistent and protected.
 
 **Acceptance Criteria:**
 
-**Given** a user creates a task,
-**When** the task is saved,
-**Then** it is securely persisted in the Supabase database.
+**Given** a user is authenticated,
+**When** a new task is created via a `POST /api/v1/tasks` request,
+**Then** the task is saved to the `tasks` table in the Supabase database with the correct `user_id`.
 
-**And** Given a user retrieves their tasks,
-**When** the tasks are loaded,
-**Then** they are securely fetched from Supabase.
+**And** Given the `tasks` table has Row Level Security (RLS) enabled,
+**When** a user requests their tasks,
+**Then** they only receive tasks where `tasks.user_id` matches their authenticated user ID.
 
-**And** Given Supabase is configured,
-**When** user authentication is managed,
-**Then** basic user authentication functions correctly.
+**And** Given a user is signed in on the frontend,
+**When** their session JWT is sent to the backend,
+**Then** the backend successfully validates the JWT to authorize the request.
 
 **Prerequisites:** Story 1.1
 
-**Technical Notes:** Implement Supabase integration for task data persistence (PostgreSQL) and user authentication. Focus on secure data handling. Covers FR7.
+**Technical Notes (Enhanced):**
+-   **Database Schema:** Implements the `tasks` table as defined in the architecture document (section 4.1), with columns for `id`, `user_id`, `title`, `is_completed`, etc.
+-   **Authentication:** The frontend uses `@supabase/supabase-js` to manage sessions. The backend FastAPI app includes a dependency that verifies the Bearer token (JWT) on protected routes.
+-   **Security:** Row Level Security (RLS) policies MUST be enabled on the `tasks` table in Supabase to enforce data isolation between users at the database level.
+-   **Data Flow:** The Next.js client sends the create/read request to the FastAPI backend, which then uses the `supabase-py` library to interact with the database.
+-   Covers FR7.
 
 ### Story 1.3: Core Task CRUD Functionality (Create, Read)
 
@@ -165,24 +174,25 @@ So that I can start organizing my responsibilities.
 
 **Acceptance Criteria:**
 
-**Given** I am logged in,
-**When** I navigate to the task list,
-**Then** I see an input field to add a new task.
+**Given** I am on the "Proactive Dashboard" or any main view,
+**When** I use the "Quick Add" (+) button to enter a task title and submit,
+**Then** a `POST` request is sent to the `/api/v1/tasks` endpoint and the new task appears in my list. (Covers FR1)
 
-**And** Given I enter text in the input field and submit,
-**Then** a new task appears in my list. (Covers FR1)
+**And** Given I navigate to a view that displays tasks,
+**When** the component mounts,
+**Then** a `GET` request is made to `/api/v1/tasks` to fetch and display all my tasks. (Covers FR2)
 
-**And** Given I have existing tasks,
-**When** I view my task list,
-**Then** all my tasks are displayed in an organized manner. (Covers FR2)
-
-**And** Given the application is running in a modern browser,
-**When** I access the task list,
-**Then** the UI is clean and minimal. (Covers FR11 part)
+**And** Given the UI is displayed,
+**When** I view the task list and input fields,
+**Then** the interface adheres to the "Hyper-Minimalism" principle from the UX design. (Covers FR11 part)
 
 **Prerequisites:** Story 1.2
 
-**Technical Notes:** Implement frontend components for task input and display. Connect to backend API for creating and reading tasks. Ensure SPA architecture responsiveness and basic browser compatibility. Covers FR1, FR2, FR11, FR21, FR22.
+**Technical Notes (Enhanced):**
+-   **Frontend:** Implement `TaskInput` and `TaskList` components using `shadcn/ui`. The "Quick Add" button should be a persistent floating action button as per the UX spec.
+-   **Backend:** Create the `POST /api/v1/tasks` and `GET /api/v1/tasks` endpoints in FastAPI. The `POST` endpoint will handle task creation and the `GET` endpoint will retrieve tasks for the authenticated user.
+-   **State Management:** Use `Zustand` for global state or `React Query`/`SWR` to manage the fetching, caching, and updating of the task list.
+-   Covers FR1, FR2, FR11, FR21, FR22.
 
 ### Story 1.4: Core Task CRUD Functionality (Update, Delete)
 
@@ -192,25 +202,29 @@ So that I can maintain an accurate and clutter-free task list.
 
 **Acceptance Criteria:**
 
-**Given** I have a task,
-**When** I activate the edit function,
-**Then** I can modify its description. (Covers FR3)
+**Given** I have an existing task,
+**When** I activate the inline edit function and save,
+**Then** a `PUT` request is sent to `/api/v1/tasks/{task_id}` and the task is updated. (Covers FR3)
 
-**And** Given I have modified a task,
-**When** I save the changes,
-**Then** the task updates in my list and in the backend.
+**And** Given I am in the "Focused Task View",
+**When** I swipe the task card away,
+**Then** the task is marked for deletion.
 
-**And** Given I have a task,
-**When** I activate the delete function and confirm,
-**Then** the task is removed from my list and the backend. (Covers FR4)
+**And** Given a task is marked for deletion,
+**When** the action is confirmed,
+**Then** a `DELETE` request is sent to `/api/v1/tasks/{task_id}` and the task is removed. (Covers FR4)
 
-**And** Given task changes are made,
-**When** I view my list across devices,
-**Then** changes reflect immediately due to real-time updates. (Covers FR23)
+**And** Given a task is updated or deleted,
+**When** another connected device is viewing the same list,
+**Then** the change is reflected immediately without a manual refresh. (Covers FR23)
 
 **Prerequisites:** Story 1.3
 
-**Technical Notes:** Implement frontend UI for editing and deleting tasks. Connect to backend API. Leverage Supabase real-time capabilities. Covers FR3, FR4, FR23.
+**Technical Notes (Enhanced):**
+-   **Frontend:** Implement inline editing for task items. In the "Focused Task View", implement the swipe gesture for deletion as per the UX design.
+-   **Backend:** Create the `PUT /api/v1/tasks/{task_id}` and `DELETE /api/v1/tasks/{task_id}` endpoints in FastAPI.
+-   **Real-time:** The frontend will listen for database changes on the `tasks` table using `@supabase/supabase-js`'s realtime subscriptions. This will ensure that any change made on one client is immediately reflected on all other subscribed clients.
+-   Covers FR3, FR4, FR23.
 
 ### Story 1.5: Task Completion and Reordering
 
@@ -220,25 +234,27 @@ So that I can manage my progress and prioritize visually.
 
 **Acceptance Criteria:**
 
-**Given** I have a task,
-**When** I mark it as complete,
-**Then** its visual status changes to indicate completion. (Covers FR5)
+**Given** I have an incomplete task,
+**When** I click its checkbox,
+**Then** the task's `is_completed` status is set to `true` via a `PUT` request, and the UI updates. (Covers FR5)
+**And** The "charging battery" progress visualization for the list updates to reflect the completion.
 
-**And** Given I have completed a task,
-**When** I unmark it,
-**Then** its status reverts.
+**And** Given I have multiple tasks in a list,
+**When** I drag and drop a task to a new position,
+**Then** the new order is persisted in the backend. (Covers FR6)
 
-**And** Given I have multiple tasks,
-**When** I drag and drop a task,
-**Then** its position in the list updates visually and in the backend. (Covers FR6)
-
-**And** Given the application aims for broad usability,
-**When** I interact with task elements,
-**Then** basic accessibility principles are applied. (Covers FR24)
+**And** Given I am using a screen reader,
+**When** I navigate to the task list,
+**Then** all interactive elements (checkboxes, drag handles) are clearly labeled and keyboard-accessible. (Covers FR24)
 
 **Prerequisites:** Story 1.4
 
-**Technical Notes:** Implement UI/UX for task completion toggling and drag-and-drop reordering. Update backend models accordingly. Covers FR5, FR6, FR24.
+**Technical Notes (Enhanced):**
+-   **Backend:** The `is_completed` boolean field in the `tasks` table will be updated. A new column, e.g., `sort_order`, will be added to the `tasks` table to persist the user's custom ordering.
+-   **Frontend:** Use a library like `react-beautiful-dnd` or `dnd-kit` to implement drag-and-drop reordering.
+-   **UX:** The "charging battery" progress visualization, as defined in the UX spec, should be implemented as a key feedback mechanism for task completion.
+-   **Accessibility:** Ensure all custom controls (like drag-and-drop handles) have proper ARIA attributes and are fully keyboard-operable to meet WCAG 2.1 AA standards.
+-   Covers FR5, FR6, FR24.
 
 ---
 
@@ -299,20 +315,29 @@ So that I can quickly categorize and understand my tasks at a glance.
 **Acceptance Criteria:**
 
 **Given** I create or edit a task,
-**When** the task is saved,
-**Then** the system sends the task description to the AI service.
+**When** the backend saves the task,
+**Then** it asynchronously calls the Gemini API with a structured prompt for label generation.
 
-**And** Given the AI service processes the task,
-**When** it returns relevant keywords,
-**Then** these keywords are saved as smart labels (e.g., "work," "personal," "urgent") for the task. (Covers FR8)
+**And** Given the Gemini API returns valid labels,
+**When** the backend processes the response,
+**Then** it populates the `labels` and `task_labels` tables in the database. (Covers FR8)
 
-**And** Given a task has smart labels,
-**When** I view the task,
-**Then** the labels are prominently displayed.
+**And** Given the Gemini API call fails or returns invalid data,
+**When** the backend handles the error,
+**Then** the task is still created successfully without any labels, and the error is logged.
 
-**Prerequisites:** Story 1.3 (Task Create/Read), Backend AI service implemented.
+**And** Given a task has labels,
+**When** the frontend displays the task,
+**Then** the labels are shown as distinct visual elements (e.g., tags or badges).
 
-**Technical Notes:** Implement AI service endpoint (FastAPI) that calls Gemini 2.5 Pro for label generation. Integrate frontend to display labels.
+**Prerequisites:** Story 1.3 (Task Create/Read)
+
+**Technical Notes (Enhanced):**
+-   **AI Integration:** All calls to the Gemini 2.5 Pro API **MUST** be made from the FastAPI backend to protect the API key, as specified in the architecture (section 4.3).
+-   **Database:** The schema will use a `labels` table for unique label names and a `task_labels` join table to create a many-to-many relationship with the `tasks` table, as per the architecture (section 4.1).
+-   **Error Handling:** The backend service will implement the fallback strategy from the architecture doc. If the AI call fails, the task creation itself does not fail.
+-   **Frontend:** The frontend should be able to gracefully handle tasks that do not have any labels.
+-   Covers FR8.
 
 ### Story 2.2: AI-Suggested Priority Levels
 
@@ -323,20 +348,24 @@ So that I can focus on what's most important and reduce decision fatigue.
 **Acceptance Criteria:**
 
 **Given** I create or edit a task,
-**When** the task is saved,
-**Then** the system sends the task description to the AI service.
+**When** the backend saves the task,
+**Then** it asynchronously calls the Gemini API with a structured prompt for priority suggestion.
 
-**And** Given the AI service processes the task,
-**When** it returns a suggested priority level (e.g., 1-4 or high/medium/low),
-**Then** this priority is saved for the task. (Covers FR9)
+**And** Given the Gemini API returns a valid priority level (e.g., an integer from 1 to 4),
+**When** the backend processes the response,
+**Then** the `priority` field is updated on the `tasks` table. (Covers FR9)
 
 **And** Given a task has a suggested priority,
-**When** I view the task,
-**Then** the priority is clearly indicated.
+**When** the frontend displays the task,
+**Then** the priority is clearly indicated (e.g., with a colored icon or border).
 
 **Prerequisites:** Story 2.1
 
-**Technical Notes:** Enhance AI service endpoint to include priority suggestion. Integrate frontend to display priority.
+**Technical Notes (Enhanced):**
+-   **AI Integration:** As with labels, priority suggestion calls to the Gemini API **MUST** originate from the FastAPI backend. The prompt should ask for a numerical value within a defined range.
+-   **Database:** The `priority` column in the `tasks` table, defined as an `integer` in the architecture (section 4.1), will store the AI-suggested value.
+-   **Frontend:** The UI should visually represent the priority levels (e.g., 4 = red, 3 = orange, etc.) to provide a quick visual cue to the user.
+-   Covers FR9.
 
 ### Story 2.3: Filter Tasks by Smart Labels
 
@@ -346,21 +375,24 @@ So that I can quickly find and focus on specific categories of tasks.
 
 **Acceptance Criteria:**
 
-**Given** I have tasks with smart labels,
-**When** I select a specific label (e.g., "work"),
-**Then** only tasks associated with that label are displayed. (Covers FR10)
+**Given** I have tasks with AI-generated labels,
+**When** I click on a "work" label tag in the UI,
+**Then** the frontend makes a `GET` request to `/api/v1/tasks?label=work`.
 
-**And** Given I have selected a filter,
-**When** I clear the filter,
-**Then** all tasks are displayed again.
+**And** Given the API returns a filtered list of tasks,
+**When** the UI updates,
+**Then** only tasks with the "work" label are displayed. (Covers FR10)
 
-**And** Given the filtering mechanism is present,
-**When** I interact with it,
-**Then** it is intuitive and responsive.
+**And** Given a filter is active,
+**When** I click a "Clear" or "All" button,
+**Then** a `GET` request is made to `/api/v1/tasks` and all tasks are displayed again.
 
 **Prerequisites:** Story 2.1
 
-**Technical Notes:** Implement frontend filtering logic based on task smart labels.
+**Technical Notes (Enhanced):**
+-   **Backend:** The `GET /api/v1/tasks` endpoint will be enhanced to accept an optional query parameter for `label`. The endpoint will perform a join with the `task_labels` and `labels` tables to filter the results.
+-   **Frontend:** The UI will display a list of unique labels from the user's tasks. Clicking a label will trigger the API call with the appropriate query parameter. The state of the current filter must be managed in the frontend's state.
+-   Covers FR10.
 
 ---
 
@@ -376,20 +408,24 @@ So that I can focus on my tasks without distractions.
 **Acceptance Criteria:**
 
 **Given** the application is loaded,
-**When** I view the UI,
-**Then** it adheres to hyper-minimalism design principles. (Covers FR11)
+**When** I view the "Proactive Dashboard" and "Focused Task View",
+**Then** the layout adheres to the principles of hyper-minimalism and calm aesthetics defined in the UX Design Specification. (Covers FR11)
 
-**And** Given I am interacting with the UI,
-**When** elements are clicked or hovered,
-**Then** visual feedback is subtle and non-distracting.
+**And** Given the application is using the "Refined Focus" theme,
+**When** I interact with UI elements,
+**Then** visual feedback is subtle and non-distracting, using the specified neutral palette and action colors.
 
-**And** Given the UI is displayed,
-**When** I resize the window,
-**Then** it remains responsive and usable across various screen sizes.
+**And** Given the UI is displayed on different screen sizes,
+**When** I resize the window from mobile to desktop,
+**Then** the layout adapts responsively as defined in the UX spec (e.g., widgets reflowing into a grid).
 
-**Prerequisites:** Story 1.3 (Core Task CRUD)
+**Prerequisites:** Story 1.3
 
-**Technical Notes:** Apply Shadcn UI and Tailwind CSS for minimalist aesthetic. Ensure responsive design implementation.
+**Technical Notes (Enhanced):**
+-   **UI/UX:** This story is the primary implementation of the visual and aesthetic goals of the project. It involves applying the "Refined Focus" color theme and the "Proactive Dashboard" design direction from the UX Design Specification.
+-   **Technology:** Use `shadcn/ui` for core components and `Tailwind CSS` for all styling, as per the architecture and UX decisions.
+-   **Responsiveness:** Pay close attention to the responsive layout definitions in the UX spec to ensure a consistent experience across devices.
+-   Covers FR11.
 
 ### Story 3.2: "Today" View and Filtering
 
@@ -401,19 +437,23 @@ So that I can immediately focus on my most urgent daily tasks (Post-MVP).
 
 **Given** I open the application,
 **When** it loads,
-**Then** the "Today" view is presented by default, showing a curated list of tasks. (Covers FR12)
+**Then** the default view presented is the "Proactive Dashboard" which contains the "Today" view. (Covers FR12)
 
 **And** Given the "Today" view is active,
-**When** I interact with tasks,
-**Then** all core task management functionalities (CRUD, complete, reorder) are available.
+**When** I view the list of tasks,
+**Then** it shows a curated list of tasks scheduled for the current day.
 
-**And** Given the "Today" view is active,
-**When** tasks are assigned to "Today" (manually or via AI),
-**Then** they appear in this view.
+**And** Given I interact with the "Today" view,
+**When** I add, edit, or complete a task,
+**Then** all core task management functionalities are available.
 
-**Prerequisites:** Story 1.3 (Core Task CRUD)
+**Prerequisites:** Story 3.1
 
-**Technical Notes:** Implement a new frontend view component for "Today." Integrate with existing task data and filtering mechanisms.
+**Technical Notes (Enhanced):**
+-   **UX:** This feature implements a key part of the "Proactive Dashboard" design direction. The "Today" view is not just a filter, but the primary, curated command center for the user's daily activities.
+-   **Backend:** The `GET /api/v1/tasks` endpoint should be enhanced to support a date-based filter, e.g., `GET /api/v1/tasks?date=today`, to fetch tasks scheduled for the current day.
+-   **Frontend:** Create a main page component that serves as the "Proactive Dashboard" and fetches the "Today" tasks by default.
+-   Covers FR12.
 
 ### Story 3.3: Light/Dark Mode Themes
 

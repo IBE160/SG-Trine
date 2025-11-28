@@ -492,19 +492,22 @@ So that I can quickly find specific tasks within my list (Post-MVP).
 
 **Given** I am viewing my tasks,
 **When** I enter text into the search bar,
-**Then** the task list dynamically filters to show only tasks matching the search query. (Covers FR14)
+**Then** the frontend sends a `GET` request to `/api/v1/tasks/search?q={query}`.
 
-**And** Given I have a long list of tasks,
-**When** I search for a keyword,
-**Then** relevant tasks appear within a reasonable time frame.
+**And** Given the backend responds with tasks matching the search query using PostgreSQL FTS,
+**When** the UI dynamically updates,
+**Then** only relevant tasks are displayed. (Covers FR14)
 
-**And** Given the search functionality is active,
+**And** Given a search query has been executed,
 **When** I clear the search bar,
-**Then** the full task list is restored.
+**Then** the full task list is restored by calling `/api/v1/tasks`.
 
 **Prerequisites:** Story 1.3 (Core Task CRUD)
 
-**Technical Notes:** Implement frontend search component and client-side (or server-side for larger datasets) filtering logic.
+**Technical Notes (Enhanced):**
+-   **Backend:** Implement a dedicated `GET /api/v1/tasks/search` endpoint in FastAPI that leverages PostgreSQL's Full-Text Search (FTS) capabilities. The `tasks` table will need a `tsvector` column and a trigger to update it, as described in the architecture document (section 5.3).
+-   **Frontend:** Implement a search input component that debounces user input to avoid excessive API calls. The search results should dynamically update the displayed task list.
+-   Covers FR14.
 
 ---
 
@@ -519,17 +522,21 @@ So that I can reduce overwhelm and make daunting tasks manageable (Post-MVP).
 
 **Acceptance Criteria:**
 
-**Given** I input a task identified as complex by the AI,
-**When** I request a breakdown,
-**Then** the system uses AI to generate a list of smaller, actionable sub-steps. (Covers FR15)
+**Given** I have an unstructured task (e.g., "Plan my vacation") and trigger the "Plan My Day" AI Workflow,
+**When** the FastAPI backend orchestrates the AI call to Gemini 2.5 Pro,
+**Then** Gemini generates a list of smaller, actionable sub-steps. (Covers FR15)
 
-**And** Given sub-steps are generated,
-**When** I accept them,
-**Then** they are added as new sub-tasks linked to the main task.
+**And** Given these sub-steps are presented to me in the UI,
+**When** I confirm them,
+**Then** they are added to my `tasks` table with their `parent_task_id` linked to the original larger task.
 
-**Prerequisites:** Story 2.1 (AI-Generated Smart Labels)
+**Prerequisites:** Story 2.1 (AI-Generated Smart Labels), Story 1.3 (Core Task CRUD)
 
-**Technical Notes:** Extend AI service to include task decomposition logic. Implement UI for displaying and accepting sub-step suggestions.
+**Technical Notes (Enhanced):**
+-   **AI Integration:** This feature is a core component of the "Plan My Day" AI Workflow (architecture section 7). The FastAPI backend will construct a detailed prompt for Gemini 2.5 Pro to perform task decomposition.
+-   **Database:** The `tasks` table schema supports `parent_task_id` for hierarchical task relationships (architecture section 4.1).
+-   **Backend:** A dedicated endpoint (e.g., `POST /api/v1/tasks/{task_id}/breakdown`) will be responsible for sending the task to the AI and processing the response.
+-   Covers FR15.
 
 ### Story 4.2: AI-Generated Time Estimates
 
@@ -539,17 +546,21 @@ So that I can better plan my day and manage my time blindness (Post-MVP).
 
 **Acceptance Criteria:**
 
-**Given** I create or edit a task,
-**When** the task is saved,
-**Then** the AI service provides an approximate time estimate (e.g., "Approx. 15 mins," "Approx. 1 hour"). (Covers FR16)
+**Given** I create or edit a task, or trigger the "Plan My Day" AI Workflow,
+**When** the FastAPI backend calls the Gemini API for task analysis,
+**Then** Gemini provides an approximate time estimate (e.g., "15 minutes," "1 hour"). (Covers FR16)
 
 **And** Given a task has a time estimate,
-**When** I view the task,
-**Then** the estimate is clearly displayed.
+**When** the task is displayed in the UI,
+**Then** the estimate is clearly displayed alongside the task title.
 
 **Prerequisites:** Story 2.1 (AI-Generated Smart Labels)
 
-**Technical Notes:** Further enhance AI service to include time estimation logic. Integrate frontend to display estimates.
+**Technical Notes (Enhanced):**
+-   **AI Integration:** Time estimation will be integrated into the Gemini API calls made from the FastAPI backend as part of the "Plan My Day" AI Workflow. The prompt should request time estimates in a structured format.
+-   **Database:** A new nullable column (e.g., `estimated_time_minutes` as an `integer`) will be added to the `tasks` table to store this estimate.
+-   **Frontend:** The UI will display this estimated time for each task, potentially using a simple visual cue.
+-   Covers FR16.
 
 ### Story 4.3: "Just Start Here" Button
 
@@ -559,17 +570,21 @@ So that I can overcome decision paralysis and initiate work immediately (Post-MV
 
 **Acceptance Criteria:**
 
-**Given** I am on my task list,
-**When** I click the "Just Start Here" button,
-**Then** the system identifies and presents the highest priority, most actionable task. (Coverts FR17)
+**Given** I am on the "Proactive Dashboard" or any task view,
+**When** I click the prominent "Just Start Here" button,
+**Then** the frontend makes a `GET` request to a backend endpoint (e.g., `/api/v1/tasks/next-priority`).
 
-**And** Given a task is presented,
-**When** I engage with it,
-**Then** the application provides a focused view for that task.
+**And** Given the backend applies AI logic to identify the highest priority, most actionable task (considering various factors like deadline, estimated time, and current context),
+**When** the frontend receives this task,
+**Then** the UI transitions to a "Focused Task View" for that specific task. (Covers FR17)
 
 **Prerequisites:** Story 2.2 (AI-Suggested Priority Levels), Story 3.2 ("Today" View)
 
-**Technical Notes:** Implement AI logic to select the "best" task considering priority, estimated time, and context. Implement UI for the button and focused task view.
+**Technical Notes (Enhanced):**
+-   **Backend:** A new FastAPI endpoint (`GET /api/v1/tasks/next-priority`) will implement the AI logic to determine the "best" task. This logic will consider factors like `priority`, `due_date`, `estimated_time_minutes`, and potentially user habits.
+-   **Frontend:** The "Just Start Here" button will be a prominent feature on the "Proactive Dashboard". Clicking it will trigger the API call and the UI transition.
+-   **UX:** The transition to the "Focused Task View" should be smooth and calming, minimizing distractions.
+-   Covers FR17.
 
 ### Story 4.4: Integrated Visual Timers
 
@@ -579,17 +594,20 @@ So that I can maintain focus and manage my work sessions effectively (Post-MVP).
 
 **Acceptance Criteria:**
 
-**Given** I am working on a task,
-**When** I activate a timer,
-**Then** a visual countdown (e.g., Pomodoro) starts. (Covers FR18)
+**Given** I am in the "Focused Task View" for a specific task,
+**When** I activate a Pomodoro timer (e.g., 25 minutes),
+**Then** a subtle, visual countdown is displayed within the Focused Task View. (Covers FR18)
 
-**And** Given the timer is running,
+**And** Given the timer completes,
 **When** the session ends,
-**Then** I am notified and prompted to take a break or continue.
+**Then** a gentle, non-intrusive notification prompts me to take a break or extend the session.
 
 **Prerequisites:** Story 4.2 (AI-Generated Time Estimates)
 
-**Technical Notes:** Implement frontend timer components. Integrate with task context for time tracking.
+**Technical Notes (Enhanced):**
+-   **Frontend:** Implement a client-side timer component that integrates seamlessly into the "Focused Task View". The timer should provide clear visual feedback without being distracting.
+-   **UX:** Notifications upon timer completion should adhere to the "Notifications & Nudges" patterns from the UX Design Specification (section 7.1), being subtle and dismissible.
+-   Covers FR18.
 
 ### Story 4.5: Smart, Gentle Nudge Reminders
 
@@ -601,15 +619,18 @@ So that I can stay on track with my priorities without feeling overwhelmed (Post
 
 **Given** a high-priority task is approaching its due time,
 **When** I am not actively engaging with the application,
-**Then** the system sends a gentle, non-judgmental notification. (Covers FR19)
+**Then** the FastAPI backend service, using AI logic, determines an appropriate moment to send a gentle, non-judgmental notification. (Covers FR19)
 
-**And** Given a notification is received,
+**And** Given a notification is received (e.g., a toast notification or push notification),
 **When** I interact with it,
-**Then** I am directed back to the relevant task.
+**Then** I am directed back to the relevant task within the application.
 
-**Prerequisites:** Story 2.2 (AI-Suggested Priority Levels)
+**Prerequisites:** Story 2.2 (AI-Suggested Priority Levels), Story 6.1 (Email Notifications or push notification setup from architecture)
 
-**Technical Notes:** Implement backend service for sending contextual notifications. Define AI logic for determining appropriate nudge timing and content.
+**Technical Notes (Enhanced):**
+-   **Backend:** This will likely require a dedicated background job or a scheduled task (potentially using `Inngest` as per architecture section 6.2) to periodically check task due dates and user activity. AI logic will be developed in the backend to determine "context-aware" triggers for nudges.
+-   **Frontend/UX:** Notifications will adhere to the "Notifications & Nudges" patterns from the UX Design Specification (section 7.1), being subtle, dismissible, and informative without being distracting.
+-   Covers FR19.
 
 ### Story 4.6: Scheduled Task Management
 
@@ -621,12 +642,15 @@ So that I can plan my workload and manage my commitments effectively (Post-MVP).
 
 **Given** I have a task,
 **When** I edit it,
-**Then** I can assign a specific due date or scheduled date. (Covers FR20)
+**Then** I can assign a specific `scheduled_date` (or `due_date`) to it via a UI date picker. (Covers FR20)
 
 **And** Given tasks are scheduled,
 **When** the scheduled day arrives,
-**Then** these tasks are prominently displayed in relevant views (e.g., "Today" view).
+**Then** these tasks are prominently displayed in relevant views (e.g., "Today" view on the "Proactive Dashboard").
 
 **Prerequisites:** Story 1.3 (Core Task CRUD)
 
-**Technical Notes:** Extend task data model to include scheduled dates. Implement UI for date selection and filtering.
+**Technical Notes (Enhanced):**
+-   **Database:** A new nullable `scheduled_date` column (`timestamp with time zone`) will be added to the `tasks` table to support this feature. This date will be distinct from `due_date` if both are needed.
+-   **Frontend:** Implement a date picker component (e.g., from `shadcn/ui`) for assigning dates. The "Today" view will need to filter and display tasks based on this new field.
+-   Covers FR20.

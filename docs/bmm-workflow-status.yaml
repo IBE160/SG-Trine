@@ -151,7 +151,7 @@ workflow_status:
       - id: "create-architecture"
         agent: "architect"
         command: "create-architecture"
-        status: "pending"
+        status: "docs/architecture-2025-11-28.md"
       - id: "create-epics-and-stories"
         agent: "pm"
         command: "create-epics-and-stories"

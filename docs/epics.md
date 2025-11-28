@@ -465,19 +465,22 @@ So that I can customize the application's appearance to my preference and reduce
 
 **Given** I am in the application,
 **When** I activate the theme toggle,
-**Then** the application's visual theme switches between light and dark modes. (Covers FR13)
+**Then** the application's visual theme switches between the "Refined Focus" Light and Dark modes. (Covers FR13)
 
 **And** Given the theme is switched,
 **When** I close and reopen the application,
-**Then** my chosen theme is remembered and applied.
+**Then** my chosen theme is remembered and applied automatically.
 
 **And** Given the theme is changed,
 **When** I view the UI,
-**Then** all UI components adapt correctly to the selected theme.
+**Then** all `shadcn/ui` components and `Tailwind CSS` styled elements adapt correctly to the selected theme.
 
 **Prerequisites:** Story 3.1
 
-**Technical Notes:** Implement theme toggling logic using Tailwind CSS and Next.js. Persist theme preference (e.g., via local storage or user settings).
+**Technical Notes (Enhanced):**
+-   **Frontend:** Implement theme toggling logic using Next.js context or a global state manager like Zustand. Persist theme preference in local storage.
+-   **Styling:** Ensure the "Refined Focus" theme, as defined in the UX spec, has `@media (prefers-color-scheme: dark)` or similar CSS variables/classes configured for seamless transitions.
+-   Covers FR13.
 
 ### Story 3.4: Task Search Functionality
 

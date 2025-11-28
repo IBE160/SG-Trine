@@ -160,10 +160,7 @@ workflow_status:
         agent: "tea"
         command: "test-design"
         status: "docs/test-design-system-2025-11-28.md"
-      - id: "implementation-readiness"
-        agent: "architect"
-        command: "implementation-readiness"
-        status: "pending"
+status: "docs/implementation-readiness-report-2025-11-28.md"
   - phase: 3
     name: "Implementation"
     required: true

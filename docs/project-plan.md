@@ -31,7 +31,7 @@
     - [x ] File: ux-design-specification.md
     - [ x] File: ux-color-themes.html
     - [x ] File: ux-design-directions.html
-  - [ ] /run-agent-task ux-designer *validate-ux-design {prompt / user-input-file}
+  - [x ] /run-agent-task ux-designer *validate-ux-design {prompt / user-input-file}
 
 ## Fase 2
 

@@ -36,7 +36,7 @@ story_location: "{project-root}/docs/sprint-artifacts"
 
 development_status:
   epic-1: contexted
-  1-1-project-setup-and-initial-deployment: backlog
+  1-1-project-setup-and-initial-deployment: drafted
   1-2-secure-user-task-data-storage: backlog
   1-3-core-task-crud-functionality-create-read: backlog
   1-4-core-task-crud-functionality-update-delete: backlog

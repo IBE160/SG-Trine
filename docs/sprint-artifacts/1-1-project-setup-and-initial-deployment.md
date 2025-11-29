@@ -1,6 +1,6 @@
 # Story 1.1: Project Setup and Initial Deployment
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -69,7 +69,7 @@ So that I can begin developing and deploying the application efficiently.
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/1-1-project-setup-and-initial-deployment.context.xml
 
 ### Agent Model Used
 

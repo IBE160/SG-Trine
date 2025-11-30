@@ -43,7 +43,7 @@ development_status:
   1-5-task-completion-and-reordering: backlog
   epic-1-retrospective: optional
 
-  epic-2: backlog
+  epic-2: contexted
   2-1-ai-generated-smart-labels: backlog
   2-2-ai-suggested-priority-levels: backlog
   2-3-filter-tasks-by-smart-labels: backlog

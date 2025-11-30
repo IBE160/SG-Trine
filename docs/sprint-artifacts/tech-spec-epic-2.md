@@ -214,16 +214,71 @@ This epic introduces a new core integration with the Gemini API and updates exis
 
 ## Acceptance Criteria (Authoritative)
 
-{{acceptance_criteria}}
+**Story 2.1: AI-Generated Smart Labels**
+
+1.  Given I create or edit a task, when the backend saves the task, then it asynchronously calls the Gemini API with a structured prompt for label generation.
+2.  Given the Gemini API returns valid labels, when the backend processes the response, then it populates the `labels` and `task_labels` tables in the database.
+3.  Given the Gemini API call fails or returns invalid data, when the backend handles the error, then the task is still created successfully without any labels, and the error is logged.
+4.  Given a task has labels, when the frontend displays the task, then the labels are shown as distinct visual elements (e.g., tags or badges).
+
+**Story 2.2: AI-Suggested Priority Levels**
+
+1.  Given I create or edit a task, when the backend saves the task, then it asynchronously calls the Gemini API with a structured prompt for priority suggestion.
+2.  Given the Gemini API returns a valid priority level (e.g., an integer from 1 to 4), when the backend processes the response, then the `priority` field is updated on the `tasks` table.
+3.  Given a task has a suggested priority, when the frontend displays the task, then the priority is clearly indicated (e.g., with a colored icon or border).
+
+**Story 2.3: Filter Tasks by Smart Labels**
+
+1.  Given I have tasks with AI-generated labels, when I click on a "work" label tag in the UI, then the frontend makes a `GET` request to `/api/v1/tasks?label=work`.
+2.  Given the API returns a filtered list of tasks, when the UI updates, then only tasks with the "work" label are displayed.
+3.  Given a filter is active, when I click a "Clear" or "All" button, then a `GET` request is made to `/api/v1/tasks` and all tasks are displayed again.
 
 ## Traceability Mapping
 
-{{traceability_mapping}}
+| Acceptance Criteria                                                                                    | Spec Section(s)            | Component(s)/API(s)                                   | Test Idea                                                                                                                   |
+| :----------------------------------------------------------------------------------------------------- | :------------------------- | :---------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------- |
+| AC 2.1.1: Task creation/edit triggers async Gemini API call for label generation.                      | 4.3.1 (Workflow 1)         | `TaskService`, `AIService`, Gemini API                | Unit test `TaskService` triggers `AIService` asynchronously. Integration test `AIService` calls Gemini.                         |
+| AC 2.1.2: Backend populates `labels` and `task_labels` tables upon valid Gemini response.              | 4.2.1, 4.3.1 (Workflow 1)  | `AIService`, `TaskRepository`, Database               | Integration test: Create task, verify labels and associations are correctly saved in DB.                                    |
+| AC 2.1.3: Backend handles Gemini API failure, task still created without labels, error logged.         | 5.3 (Reliability)          | `AIService`, Logging                                  | Unit/Integration test: Mock Gemini API failure, check task creation (no labels) and error logs.                             |
+| AC 2.1.4: Frontend displays task labels as distinct visual elements.                                   | 4.2.1 (Data Models)        | `LabelTag` component, `TaskRead` model, UI            | UI test: Verify labels are rendered correctly on task cards in various states (e.g., multiple labels, no labels).            |
+| AC 2.2.1: Task creation/edit triggers async Gemini API call for priority suggestion.                   | 4.3.1 (Workflow 1)         | `TaskService`, `AIService`, Gemini API                | Unit test `TaskService` triggers `AIService` asynchronously. Integration test `AIService` calls Gemini for priority.        |
+| AC 2.2.2: Backend updates `priority` field on `tasks` table upon valid Gemini response.                | 4.2.1, 4.3.1 (Workflow 1)  | `AIService`, `TaskRepository`, Database               | Integration test: Create task, verify `priority` field is updated correctly in DB.                                          |
+| AC 2.2.3: Frontend displays task priority clearly.                                                     | 4.2.1 (Data Models)        | `TaskRead` model, UI Component                        | UI test: Verify priority (e.g., color-coded icon) is displayed correctly on task cards.                                     |
+| AC 2.3.1: Frontend makes `GET /api/v1/tasks?label=work` when label tag clicked.                        | 4.2.3, 4.3.2 (Workflow 2)  | `LabelTag` component, `TaskStateService`, Frontend API | UI/E2E test: Click a label, intercept network request to verify correct API call with `label` query param.                 |
+| AC 2.3.2: API returns filtered list of tasks; UI updates to show only tasks with "work" label.         | 4.2.3, 4.3.2 (Workflow 2)  | `TaskService`, `TaskRepository`, Database, Frontend   | Integration/E2E test: Verify only tasks with the selected label are displayed after filtering.                              |
+| AC 2.3.3: Frontend makes `GET /api/v1/tasks` when "Clear" filter clicked, showing all tasks.           | 4.2.3, 4.3.2 (Workflow 2)  | `TaskStateService`, Frontend API                      | UI/E2E test: Click clear filter, verify network request to `/api/v1/tasks` (no label param), and all tasks are displayed. |
 
 ## Risks, Assumptions, Open Questions
 
-{{risks_assumptions_questions}}
+*   **Risk:** Gemini API rate limits could be encountered with frequent task updates, leading to degraded user experience or service interruption.
+    *   **Mitigation:** Implement client-side rate limiting on asynchronous AI calls, ensure proper backoff and retry logic in the `AIService`. Consider caching for highly repetitive task descriptions.
+*   **Risk:** The quality and relevance of AI-generated labels and priority levels may vary, potentially requiring extensive prompt engineering and continuous refinement.
+    *   **Mitigation:** Establish a clear feedback mechanism (internal or user-facing) to identify and act on sub-optimal AI outputs. Implement robust logging of prompts and responses for data-driven prompt optimization.
+*   **Assumption:** The Gemini API will provide consistent response formats. Variations in the response structure could break parsing logic in the `AIService`.
+    *   **Mitigation:** Implement flexible and defensive parsing logic in `AIService`, with clear error handling for unexpected response structures. Keep API client libraries up-to-date.
+*   **Open Question:** What is the optimal context window or maximum length of task descriptions that the Gemini API can reliably process for label and priority generation without performance degradation or loss of accuracy?
+    *   **Next Step:** Conduct performance and accuracy testing with varying task description lengths during early implementation.
+*   **Open Question:** How will the growth of the `labels` table be managed? Will there be a need for label cleanup, merging of similar labels (e.g., "work" vs. "office"), or user-defined label hierarchies?
+    *   **Next Step:** Monitor label proliferation post-deployment. This may inform a future epic for label management features.
 
 ## Test Strategy Summary
 
-{{test_strategy}}
+The testing strategy for Epic 2 will focus on ensuring the accuracy, reliability, and performance of the AI integration, alongside the correct functioning of new data models and API endpoints.
+
+*   **Unit Tests:**
+    *   **Backend (`pytest`):** Cover individual components like `TaskService` (ensuring correct invocation of `AIService`), `AIService` (mocking Gemini API to test prompt construction, response parsing, and error handling), and `TaskRepository` (verifying database interactions for tasks, labels, and `task_labels` creation/updates).
+    *   **Frontend (`Jest`, `React Testing Library`):** Test `LabelTag` component rendering and click events, and `TaskStateService` logic for managing filtered task lists.
+*   **Integration Tests:**
+    *   **Backend API (`pytest`):** Verify `GET /api/v1/tasks?label={label}` returns correctly filtered results. Test `POST /api/v1/tasks` and `PUT /api/v1/tasks/{task_id}` to ensure end-to-end task saving, asynchronous AI analysis, and subsequent database updates.
+    *   **Full Stack (`Playwright`):** Simulate user flows for creating/editing tasks, observing AI-generated labels and priorities appearing in the UI, and filtering tasks by clicking labels.
+*   **AI-Specific Testing:**
+    *   Develop a dedicated suite of tests for `AIService` that uses a mocked Gemini API to simulate various scenarios: successful responses (with diverse labels/priorities), API failures, and malformed responses. This ensures the service's resilience.
+    *   Implement basic regression tests for AI output: Given a set of standard task inputs, verify that the AI consistently generates expected labels and priority ranges.
+*   **Edge Case Testing:**
+    *   Tasks with very short or very long descriptions.
+    *   Tasks with ambiguous content (e.g., "call a friend" - personal or work?).
+    *   Concurrent task creation/updates from multiple users.
+    *   Scenarios where AI returns no labels or priority.
+    *   Testing with empty label lists or non-existent labels in the filter endpoint.
+*   **Performance Testing:** Load testing on the `/api/v1/tasks` endpoint with filtering enabled to ensure it meets latency requirements under expected load.
+*   **Security Testing:** Verify that API keys are not exposed and that RLS policies prevent unauthorized access to task data.

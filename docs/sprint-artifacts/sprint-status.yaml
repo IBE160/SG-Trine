@@ -56,7 +56,7 @@ development_status:
   3-4-task-search-functionality: backlog
   epic-3-retrospective: optional
 
-  epic-4: backlog
+  epic-4: contexted
   4-1-ai-task-breakdown-suggestions: backlog
   4-2-ai-generated-time-estimates: backlog
   4-3-just-start-here-button: backlog

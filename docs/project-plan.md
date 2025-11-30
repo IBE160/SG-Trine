@@ -66,12 +66,7 @@
       - [ ] /run-agent-task dev *story-done {prompt / user-input-file}
       - [ ] /run-agent-task sm *test-review {prompt / user-input-file}
     - [ ] /run-agent-task sm *epic-retrospective {prompt / user-input-file}
-Next Steps:
 
-   1. Review the context file:
-      docs/sprint-artifacts/1-1-project-setup-and-initial-deployment.context.xml
-   2. Run dev-story to implement the story
-   3. Generate context for more drafted stories if needed
 
 
 

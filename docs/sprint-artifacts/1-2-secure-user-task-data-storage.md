@@ -1,6 +1,6 @@
 # Story 1.2: Secure User Task Data Storage
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -109,7 +109,7 @@ so that my information is persistent and protected.
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/1-2-secure-user-task-data-storage.context.xml
 
 ### Agent Model Used
 

@@ -1,6 +1,6 @@
 # Story 1.3: core-task-crud-functionality-create-read
 
-Status: drafted
+Status: done
 
 ## Story
 

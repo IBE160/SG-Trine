@@ -1,6 +1,6 @@
 # Story 1.2: Secure User Task Data Storage
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 

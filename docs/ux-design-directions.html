@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Design Direction Showcase</title>
+    <style>
+        :root {
+            --primary-color: #2563EB;
+            --secondary-color: #D1D5DB;
+            --accent-color: #EFF6FF;
+            --neutral-bg: #F9FAFB;
+            --text-color: #111827;
+            --success-color: #059669;
+            --error-color: #DC2626;
+            --card-bg: #FFFFFF;
+            --card-border: #E5E7EB;
+            --input-border: #D1D5DB;
+            --input-focus-shadow: #BFDBFE;
+            --alert-success-bg: #ECFDF5;
+            --alert-success-text: #047857;
+            --alert-success-border: #6EE7B7;
+            --alert-error-bg: #FEF2F2;
+            --alert-error-text: #B91C1C;
+            --alert-error-border: #FECACA;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--neutral-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        .intro-note {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #495057;
+            background-color: #e9ecef;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+        }
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            background-color: #e9ecef;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            background-color: transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .responsive-toggle {
+            display: flex;
+            gap: 0.5rem;
+            background-color: #e9ecef;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        .responsive-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            background-color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .responsive-btn.active {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .direction-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            margin-bottom: 4rem;
+            padding: 2.5rem;
+            border: 1px solid var(--card-border);
+            display: none; /* Hide all sections by default */
+        }
+        .direction-section.active {
+            display: block; /* Show active section */
+        }
+        .direction-section h2 {
+            margin-top: 0;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.75rem;
+            margin-bottom: 2rem;
+        }
+        .direction-section .philosophy {
+            font-size: 1.1rem;
+            color: #495057;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .mockups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        .mockup-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #E5E7EB;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .mockup-card h3 {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 0.75rem 1rem;
+            margin: 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .mockup-content {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .mockup-screenshot {
+            width: 100%;
+            height: 200px; /* Standard height for screenshots */
+            background-color: #f0f0f0; /* Placeholder background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-style: italic;
+            border: 1px dashed #ced4da;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Components for mockups --- */
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        .task-item {
+            background-color: var(--accent-color);
+            padding: 0.8rem;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .task-item.completed {
+            background-color: var(--alert-success-bg);
+            color: var(--alert-success-text);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .task-item input[type="checkbox"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+        }
+        .task-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--input-border);
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            box-sizing: border-box;
+        }
+        .kanban-column {
+            background-color: #F0F2F5;
+            padding: 1rem;
+            border-radius: 8px;
+            min-height: 250px;
+        }
+        .kanban-column h4 {
+            margin-top: 0;
+            color: #343a40;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .kanban-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .focused-task-view {
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .focused-task-view .task-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .focused-task-view .sub-task-count {
+            font-size: 1.1rem;
+            color: #495057;
+            margin-bottom: 1.5rem;
+        }
+        .focused-task-view .btn-focus-action {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .alert-success {
+            background-color: var(--alert-success-bg);
+            color: var(--alert-success-text);
+            border-color: var(--alert-success-border);
+            padding: 0.8rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>✨ UX Design Direction Showcase ✨</h1>
+        <div class="intro-note">
+            These mockups illustrate three distinct design directions for the app's key screens, using our chosen **"Refined Focus"** color theme in **light mode**.
+            The purpose is to explore different layouts and interaction patterns before diving into detailed design.
+        </div>
+        
+        <div class="controls-bar">
+            <div class="tabs">
+                <button class="tab-button active" onclick="showDirection('all')">All Directions</button>
+                <button class="tab-button" onclick="showDirection('dir-1')">1. The Focused List</button>
+                <button class="tab-button" onclick="showDirection('dir-2')">2. The Zen Kanban</button>
+                <button class="tab-button" onclick="showDirection('dir-3')">3. The Immersive Task</button>
+            </div>
+            <div class="responsive-toggle">
+                <button id="desktop-btn" class="responsive-btn active" onclick="setResponsive('desktop')">Desktop</button>
+                <button id="tablet-btn" class="responsive-btn" onclick="setResponsive('tablet')">Tablet</button>
+                <button id="mobile-btn" class="responsive-btn" onclick="setResponsive('mobile')">Mobile</button>
+            </div>
+        </div>
+
+        <!-- Direction 1: The Focused List -->
+        <div class="direction-section" id="dir-1">
+            <h2>Direction 1: The Focused List</h2>
+            <p class="philosophy">This direction focuses on a clean, linear, and minimalist list experience. It's familiar and straightforward, presenting tasks in a simple, scrollable feed. Sub-tasks are clearly nested and indented under parent tasks. This feels like an enhanced version of a traditional to-do list, optimized for clarity and reduced cognitive load.</p>
+
+            <div class="mockups-grid">
+                <div class="mockup-card">
+                    <h3>Main Task List (Before "Go")</h3>
+                    <div class="mockup-content">
+                        <input type="text" class="task-input" placeholder="Add a new task (e.g., washing clothes)...">
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Buy groceries</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Send email to professor</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Washing clothes</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Prepare for meeting</span>
+                        </div>
+                        <a href="#" class="btn-primary" style="align-self: flex-start;">Go! Prioritize My Day</a>
+                    </div>
+                </div>
+
+                <div class="mockup-card">
+                    <h3>Organized "Today" View (After "Go")</h3>
+                    <div class="mockup-content">
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Eat breakfast</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Take out the trash</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Start washing machine</span> <span style="font-size:0.8em; color: gray;">(Washing clothes)</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Prepare for meeting</span>
+                        </div>
+                         <div class="task-item">
+                            <input type="checkbox">
+                            <span>Attend meeting</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Walk the dog</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Hang up clothes</span> <span style="font-size:0.8em; color: gray;">(Washing clothes)</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Buy groceries</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mockup-card">
+                    <h3>Focus Mode</h3>
+                    <div class="mockup-content focused-task-view" style="justify-content: flex-start;">
+                        <h4 style="color: var(--text-color);">Currently Focused On:</h4>
+                        <div class="task-title">Prepare for meeting</div>
+                        <p class="sub-task-count">Next step: Review agenda (AI suggested)</p>
+                        <a href="#" class="btn-focus-action">Mark as Done & Next</a>
+                        <a href="#" style="margin-top: 1rem; color: var(--primary-color);">Exit Focus Mode</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 2: The Zen Kanban -->
+        <div class="direction-section" id="dir-2">
+            <h2>Direction 2: The Zen Kanban</h2>
+            <p class="philosophy">This direction visualizes tasks as cards flowing through columns (e.g., Today, In Progress, Done). It provides a strong visual sense of progress and allows for easy drag-and-drop interaction. Sub-tasks are represented as smaller items within a card or as a checklist on the card itself, providing a structured, visual workflow.</p>
+
+            <div class="mockups-grid">
+                <div class="mockup-card">
+                    <h3>Organized "Today" View (Kanban)</h3>
+                    <div class="mockup-content">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="kanban-column">
+                                <h4>Ready to Do</h4>
+                                <div class="kanban-card">
+                                    <strong>Eat breakfast</strong>
+                                </div>
+                                <div class="kanban-card">
+                                    <strong>Take out the trash</strong>
+                                </div>
+                                <div class="kanban-card">
+                                    <strong>Washing clothes</strong>
+                                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; color: #495057;">
+                                        <li>Start machine</li>
+                                    </ul>
+                                </div>
+                                <div class="kanban-card">
+                                    <strong>Prepare for meeting</strong>
+                                </div>
+                            </div>
+                            <div class="kanban-column">
+                                <h4>In Progress</h4>
+                                <div class="kanban-card">
+                                    <strong>Attend meeting</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-primary">Add New Task</a>
+                    </div>
+                </div>
+
+                <div class="mockup-card">
+                    <h3>Focus Mode (Kanban Card Detail)</h3>
+                    <div class="mockup-content focused-task-view">
+                        <h4 style="color: var(--text-color);">Current Task:</h4>
+                        <div class="task-title">Washing Clothes</div>
+                        <ul style="list-style-type: none; padding: 0; text-align: left; width: 80%; margin-bottom: 1.5rem;">
+                            <li><input type="checkbox" checked style="margin-right:0.5rem;"> Sort clothes</li>
+                            <li><input type="checkbox" checked style="margin-right:0.5rem;"> Start machine</li>
+                            <li><input type="checkbox" style="margin-right:0.5rem;"> Wait for cycle to finish</li>
+                            <li><input type="checkbox" style="margin-right:0.5rem;"> Hang up clothes</li>
+                        </ul>
+                        <a href="#" class="btn-focus-action">Mark Sub-Step Done</a>
+                        <a href="#" style="margin-top: 1rem; color: var(--primary-color);">Back to Kanban</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 3: The Immersive Task -->
+        <div class="direction-section" id="dir-3">
+            <h2>Direction 3: The Immersive Task</h2>
+            <p class="philosophy">This is an opinionated direction that strongly emphasizes single-task focus. The primary view is almost always a "Focus Mode," showing only the most important task or sub-task to be done NEXT. The full task list is de-emphasized and accessible only through a deliberate action, drastically reducing distractions for users prone to overwhelm.</p>
+
+            <div class="mockups-grid">
+                <div class="mockup-card">
+                    <h3>Main View (Always Focused)</h3>
+                    <div class="mockup-content focused-task-view">
+                        <h4 style="color: var(--text-color); font-size: 1.2rem; margin-bottom: 0.5rem;">Your Next Action:</h4>
+                        <div class="task-title">Eat Breakfast</div>
+                        <p class="sub-task-count" style="margin-bottom: 2rem;">(From your morning routine)</p>
+                        <a href="#" class="btn-focus-action">I've Done This! Next!</a>
+                        <a href="#" style="margin-top: 1rem; color: var(--primary-color);">See Full Plan (Don't Get Distracted)</a>
+                        <input type="text" class="task-input" placeholder="Quick Add New Task" style="margin-top: 2rem; width: 80%; text-align: center;">
+                    </div>
+                </div>
+
+                <div class="mockup-card">
+                    <h3>Full Plan (De-emphasized)</h3>
+                    <div class="mockup-content">
+                        <h3 style="color: var(--text-color); background-color: transparent; border-bottom: none; text-align: center;">Your Full Prioritized Plan</h3>
+                         <div class="task-item completed">
+                            <input type="checkbox" checked>
+                            <span>Eat breakfast</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Take out the trash</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Start washing machine</span> <span style="font-size:0.8em; color: gray;">(Washing clothes)</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Prepare for meeting</span>
+                        </div>
+                         <div class="task-item">
+                            <input type="checkbox">
+                            <span>Attend meeting</span>
+                        </div>
+                        <div class="task-item">
+                            <input type="checkbox">
+                            <span>Walk the dog</span>
+                        </div>
+                        <a href="#" class="btn-primary" style="align-self: center;">Back to Focus Mode</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function showDirection(directionId) {
+            // Hide all direction sections
+            document.querySelectorAll('.direction-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Show the selected direction or all directions
+            if (directionId === 'all') {
+                document.querySelectorAll('.direction-section').forEach(section => {
+                    section.style.display = 'block';
+                });
+            } else {
+                document.getElementById(directionId).style.display = 'block';
+            }
+
+            // Update active tab
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function setResponsive(device) {
+            const container = document.querySelector('.container');
+            
+            // Update responsive button active state
+            document.querySelectorAll('.responsive-btn').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.getElementById(device + '-btn').classList.add('active');
+
+            // Adjust container width based on device
+            if (device === 'desktop') {
+                container.style.maxWidth = '1400px';
+            } else if (device === 'tablet') {
+                container.style.maxWidth = '800px';
+            } else if (device === 'mobile') {
+                container.style.maxWidth = '420px';
+            }
+        }
+
+        // Initially show all directions
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.direction-section').forEach(section => {
+                section.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

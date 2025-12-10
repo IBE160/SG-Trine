@@ -1,0 +1,127 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1</storyId>
+    <title>Project Setup and Initial Deployment</title>
+    <status>drafted</status>
+    <generatedAt>lørdag 29. november 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-1-project-setup-and-initial-deployment.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a developer</asA>
+    <iWant>to set up the project infrastructure (Next.js, FastAPI, Supabase, Vercel)</iWant>
+    <soThat>I can begin developing and deploying the application efficiently</soThat>
+    <tasks>
+- [ ] **Task 1: Establish Monorepo Structure Locally (AC 1.1)**
+  - [ ] Initialize Next.js frontend: `npx create-next-app@latest nextjs-frontend --typescript --eslint --app --src-dir --import-alias "@/*"` [Source: `architecture-2025-11-28.md#2.-Starter-Template-Decision`]
+  - [ ] Create `api/` directory at the project root level
+  - [ ] Set up Python virtual environment in `api/`: `python -m venv venv`
+  - [ ] Activate venv and install FastAPI dependencies: `pip install fastapi uvicorn[standard] supabase-py pydantic-settings`
+  - [ ] Create `main.py` in `api/` with a basic FastAPI app.
+
+- [ ] **Task 2: Configure Vercel Deployment (AC 1.2, 1.3, 1.4)**
+  - [ ] Push local monorepo to a Git provider (e.g., GitHub).
+  - [ ] Connect repository to Vercel.
+  - [ ] Configure Vercel project settings for monorepo (specify `nextjs-frontend` as root).
+  - [ ] Configure Vercel to detect FastAPI app in `api/` as a serverless function.
+  - [ ] Add necessary environment variables to Vercel (e.g., placeholder Supabase URL/keys, Gemini API Key if required for initial build). [Source: `architecture-2025-11-28.md#Technical-Notes-Enhanced`]
+
+- [ ] **Task 3: Verify End-to-End Deployment (AC 1.4)**
+  - [ ] Implement a minimal "Hello World" endpoint in the FastAPI app (`api/main.py`).
+  - [ ] Make a basic fetch request from the Next.js frontend to the FastAPI "Hello World" endpoint.
+  - [ ] Deploy to Vercel.
+  - [ ] Verify that the Next.js frontend deploys successfully.
+  - [ ] Verify that the FastAPI serverless function deploys successfully.
+  - [ ] Access the frontend in a browser and verify the "Hello World" message from the backend is displayed.
+
+- [ ] **Task 4: Basic Testing Setup**
+  - [ ] Set up basic `Jest` / `React Testing Library` for frontend. [Source: `architecture-2025-11-28.md#4.-Cross-Cutting-Concerns`]
+  - [ ] Set up basic `pytest` for backend. [Source: `architecture-2025-11-28.md#4.-Cross-Cutting-Concerns`]
+  - [ ] Write a simple unit test for one frontend component.
+  - [ ] Write a simple unit test for one backend endpoint.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Project Setup & Deployment:**
+    1.1. The monorepo structure (Next.js frontend, FastAPI backend in `api/`) is established locally after initial setup commands.
+    1.2. The Next.js frontend successfully deploys to Vercel.
+    1.3. The FastAPI app in the `api/` directory successfully deploys as a Vercel serverless function.
+    1.4. A "Hello World" endpoint on the deployed FastAPI function is reachable.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>2. Starter Template Decision</section>
+        <snippet>Recommends the exact `npx create-next-app` and `pip install` commands needed to establish the Next.js frontend and FastAPI backend, forming the project's foundation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>5. Project Structure</section>
+        <snippet>Defines the monorepo structure, detailing the layout for the `nextjs-frontend/` and `api/` directories, which is critical for this story's implementation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>8. Implementation Patterns (Consistency Rules)</section>
+        <snippet>Establishes naming conventions and file structure rules that must be followed from the very beginning of the project setup.</snippet>
+      </doc>
+      <doc>
+        <path>docs/prd.md</path>
+        <title>ibe160 - Product Requirements Document</title>
+        <section>Technical & Platform Requirements</section>
+        <snippet>Specifies core technical requirements like being a Single Page Application (SPA) and supporting modern browsers, justifying the choice of the Next.js framework.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>1.1 Design System Choice</section>
+        <snippet>Confirms the selection of `shadcn/ui` and its integration with Tailwind CSS and Next.js, which is essential information for the frontend setup.</snippet>
+      </doc>
+    </docs>
+    <code></code>
+    <dependencies>
+      <ecosystem name="Node.js / Frontend">
+        <package name="next" version="latest" />
+        <package name="react" version="latest" />
+        <package name="tailwindcss" version="latest" />
+        <package name="shadcn/ui" version="latest" />
+      </ecosystem>
+      <ecosystem name="Python / Backend">
+        <package name="fastapi" />
+        <package name="uvicorn" />
+        <package name="supabase-py" />
+        <package name="pydantic-settings" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- **Monorepo Structure:** Must follow the structure defined in `architecture.md`, with a `nextjs-frontend` directory and a separate `api` directory for the FastAPI backend.
+- **API Design:** All frontend-backend communication must adhere to the specified API design (`/api/v1` RESTful, Pydantic validation).
+- **Deployment:** Deployment will be on Vercel, with the FastAPI backend deployed as serverless functions.
+- **Naming Conventions:** All code must follow the naming conventions specified in the architecture document (e.g., `camelCase` for JS/TS, `snake_case` for Python).
+- **File Structure:** File organization must adhere to the patterns specified in the architecture document (e.g., components by feature, separation of services/models/api in backend).
+</constraints>
+  <interfaces></interfaces>
+  <tests>
+    <standards>
+    The project will use Jest and React Testing Library for frontend unit/integration testing, and Playwright for end-to-end tests. The backend will be tested using pytest for unit and integration tests. This strategy is defined in the architecture document.
+  </standards>
+    <locations>
+    - Frontend: `nextjs-frontend/src/__tests__/` or `*.test.tsx` / `*.spec.tsx` files.
+    - Backend: `api/tests/`
+  </locations>
+    <ideas>
+    - (AC 1.1) Unit test a basic React component to ensure Jest/RTL is configured.
+    - (AC 1.1) Unit test a basic FastAPI endpoint function with pytest.
+    - (AC 1.4) Write an E2E test with Playwright that navigates to the homepage and verifies the "Hello World" message from the backend is displayed.
+  </ideas>
+  </tests>
+</story-context>

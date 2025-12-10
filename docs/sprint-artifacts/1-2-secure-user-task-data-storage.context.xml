@@ -1,0 +1,121 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>2</storyId>
+    <title>Secure User Task Data Storage</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-2-secure-user-task-data-storage.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>my task data to be securely stored and managed in a backend</iWant>
+    <soThat>my information is persistent and protected</soThat>
+    <tasks>
+      <task id="1">Implement Database Schema Changes</task>
+      <task id="2">Configure Supabase Row Level Security (RLS)</task>
+      <task id="3">Implement Backend JWT Validation &amp; User Extraction</task>
+      <task id="4">Frontend Integration for Authentication</task>
+      <task id="5">Update `POST /api/v1/tasks` Endpoint</task>
+      <task id="6">Basic Testing</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">Given a user is authenticated, when a new task is created via a `POST /api/v1/tasks` request, then the task is saved to the `tasks` table in the Supabase database with the correct `user_id`. (Covers FR7)</criterion>
+    <criterion id="2">Given the `tasks` table has Row Level Security (RLS) enabled, when a user requests their tasks, then they only receive tasks where `tasks.user_id` matches their authenticated user ID. (Covers FR7)</criterion>
+    <criterion id="3">Given a user is signed in on the frontend, when their session JWT is sent to the backend, then the backend successfully validates the JWT to authorize the request. (Covers FR7)</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <artifact>
+        <path>docs/prd.md</path>
+        <title>Product Requirements Document</title>
+        <section>Functional Requirements</section>
+        <snippet>FR7: The application stores task data securely in a backend (Supabase).</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/prd.md</path>
+        <title>Product Requirements Document</title>
+        <section>Security</section>
+        <snippet>User task data and authentication credentials will be secured using industry best practices inherent in Supabase's managed services (PostgreSQL and Auth).</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; Core Task Management</title>
+        <section>Data Models and Contracts</section>
+        <snippet>The core data model for Epic 1 revolves around `users` and `tasks`. The `tasks` table includes a `user_id` (Foreign Key to `users.id`) to link the task to its owner.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; Core Task Management</title>
+        <section>Security</section>
+        <snippet>Row Level Security (RLS) policies will be strictly enforced on the `tasks` table to ensure that users can only access and modify their own data.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>3.1. Critical Architectural Decisions</section>
+        <snippet>Supabase Integration: The frontend uses @supabase/supabase-js for auth and real-time subscriptions. The backend uses supabase-py for data access, enforcing Row Level Security.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>3.2. Important Architectural Decisions</section>
+        <snippet>Authentication Flow: Secure JWT-based authentication flow managed by Supabase, with backend validation.</snippet>
+      </artifact>
+    </docs>
+    <code></code>
+    <dependencies></dependencies>
+  </artifacts>
+
+  <constraints>
+      <constraint>Must enforce Row Level Security (RLS) on the `tasks` table in Supabase.</constraint>
+      <constraint>Backend must validate JWTs on protected routes to authorize user requests.</constraint>
+      <constraint>Project must follow the monorepo structure with `nextjs-frontend` and `api` directories.</constraint>
+      <constraint>API endpoints must be `kebab-case` and use plural nouns (e.g., `/api/v1/tasks`).</constraint>
+      <constraint>JSON properties in API requests/responses must be `snake_case`.</constraint>
+      <constraint>Python code must use `snake_case` for variables.</constraint>
+    </constraints>
+  <interfaces>
+      <interface>
+        <name>Create Task</name>
+        <kind>REST endpoint</kind>
+        <signature>POST /api/v1/tasks</signature>
+        <path>api/app/main.py</path>
+      </interface>
+      <interface>
+        <name>Read Tasks</name>
+        <kind>REST endpoint</kind>
+        <signature>GET /api/v1/tasks</signature>
+        <path>api/app/main.py</path>
+      </interface>
+      <interface>
+        <name>Update Task</name>
+        <kind>REST endpoint</kind>
+        <signature>PUT /api/v1/tasks/{task_id}</signature>
+        <path>api/app/main.py</path>
+      </interface>
+      <interface>
+        <name>Delete Task</name>
+        <kind>REST endpoint</kind>
+        <signature>DELETE /api/v1/tasks/{task_id}</signature>
+        <path>api/app/main.py</path>
+      </interface>
+    </interfaces>
+  <tests>
+      <standards>The testing strategy involves unit tests for the frontend (Jest, React Testing Library) and backend (pytest), integration tests for FastAPI endpoints and Supabase interactions, and end-to-end (E2E) tests for critical user journeys using Playwright. Every acceptance criterion will have at least one corresponding test.</standards>
+      <locations>
+        <location>nextjs-frontend/src/__tests__/</location>
+        <location>api/tests/</location>
+      </locations>
+      <ideas>
+        <idea for="AC1">Create task with authenticated user; verify `user_id` in DB.</idea>
+        <idea for="AC2">As User A, fetch tasks; verify no User B tasks are returned.</idea>
+        <idea for="AC3">Authenticate with valid JWT; attempt API call; verify success. Authenticate with invalid JWT; verify rejection.</idea>
+      </ideas>
+    </tests>
+</story-context>

@@ -1,0 +1,30 @@
+Refleksjonsrapport – IBE160 Programmering med KI
+
+Grunnet fødsel kom jeg veldig sent i gang med prosjektet. Jeg vurderte sterkt å droppe hele faget, da det virket veldig overveldende, og jeg forsto overhodet ingenting i starten. Etter å ha fått god starthjelp kom jeg likevel i gang, og ble overrasket over at jeg faktisk syntes det var artig.
+Naturligvis, siden jeg startet bare to uker før eksamen skulle leveres, måtte ambisjonsnivået være deretter. Men likevel har jeg kjent på mestring underveis, og jeg er fornøyd med at jeg valgte å prøve istedenfor å gi opp.
+
+Jeg gikk for To-Do-prosjektet, først fordi det lå i kategorien «enkel», men senere syntes jeg valget ble stadig bedre. Jeg har ADHD, og er nå umedisinert på grunn av amming. Med «ammetåke» på toppen, ble ideen om en enkel oppgaveliste til slutt et lite hverdagsprosjekt med personlig betydning: en interaktiv app som bruker kunstig intelligens til å prioritere oppgaver, foreslå underoppgaver og tilpasse seg hverdagen.
+Eksempelvis skal appen kunne forstå at «klesvask» består av flere steg (vaske, tørke, brette, rydde), og automatisk legge dem til. Appen skal også beregne reisetid mellom gjøremål eller lar brukere invitere til appen og dele lister med hverandre. I tillegg skal brukeren kunne endre på estimerte tider, både reise og pr oppgave, og endre og legge til underoppgaver. Etter hvert, når appen blir kjent med brukeren, skal appen tilpasse seg. Så jo mer man bruker appen, jo bedre blir den tilpasset hver enkelt bruker.
+
+Utviklingsprosess og utfordringer
+Arbeidet foregikk i BMAD-rammeverket gjennom Gemini, som bruker ulike AI-agenter til å utføre oppgaver for roller som analytiker, prosjektleder, utvikler og designer. Prosessen var strukturert, men krevde mye forståelse for hvordan de ulike agentene hang sammen.
+I starten slet jeg mest med å få alt til å fungere teknisk. Jeg måtte laste ned flere programmer og forstå hvordan jeg skulle kjøre kommandoene. Flere ganger fikk jeg feilmeldinger uten å forstå hvorfor, og det tok tid å skjønne hvordan jeg kunne fortsette fra der jeg stoppet. Etter hvert lærte jeg å ta ett steg om gangen, og fikk flyt i prosessen.
+Etter hvert som jeg kom lenger, støtte jeg likevel på et problem jeg ikke har klart å løse. Systemet ber meg laste ned noe eller gjøre endringer direkte på PC-en, men jeg tør rett og slett ikke stole blindt på det. Jeg har spurt om hjelp, men ikke fått svar ennå. Det er mulig jeg derfor ikke blir helt ferdig med prosjektet, og det er selvsagt litt kjipt, men jeg velger heller det enn å risikere å ødelegge noe på maskinen min.
+
+Samtidig ser jeg på dette som en del av læringen: at jeg fortsatt ikke er helt trygg i verktøyene eller miljøet, men at jeg vet hvor grensene mine går. AI kan være svært overbevisende, men man må huske at det ikke alltid har full innsikt i situasjonen eller sikkerheten på en personlig datamaskin. Dette viser hvor viktig det er å ha egen forståelse og dømmekraft, og ikke stole blindt på KI – uansett hvor selvsikker den virker.
+
+Hvordan KI påvirket sluttresultatet
+KI påvirket hele prosessen fra start til slutt. Uten AI ville jeg ikke hatt mulighet til å gjennomføre prosjektet på så kort tid. Det positive var at jeg fikk hjelp til å lage struktur, filer og forslag til løsninger mye raskere enn jeg selv ville klart. Jeg lærte også hvordan AI kan brukes som en samarbeidspartner i utvikling, ikke bare som et verktøy.
+Jeg fikk til å prompte AI fint under desing-delen. Der jobbet vi godt sammen. Agenten forsto konseptet jeg så for meg, og vi branstormet ideer som ville passe. Det ble ikke foreslått noe voldsomme avanserte saker, fordi hele hensikten var at appen ikke skulle være overveldende for brukeren. Hvis jeg foreslo noe, ga AI meg tilbakemelding basert på konseptet/tanken bak appen. Et eksempel er at jeg ønsket at appen skal være gratis, men ingenting i livet er gratis, så den må kunne bringe inntekter. Da stod valget mellom gratis app med alle tilganger, mot reklame. Eller at noe basic er gratis, og man kan abonnere for tilgang til interaktiv AI. Det ble sistnevnte løsning, fordi AI poengterte at en app med annonser vil være forstyrrende. Og for en med ADHD (eller konsentrasjonsvansker, motivasjonsmangel o.l) passer det svært dårlig. Veien er kort til overstimuli.
+Jeg er så glad vi har AI i dag, for når hjernen ikke fungerer, kan man bruke AI til å tenke ut forslag for seg. Det er et helt nydelig samarbeid som jeg i hverdagen, utenom studier, også har god hjelp av.
+
+Etiske og teknologiske refleksjoner
+Prosjektet har fått meg til å reflektere over både etiske og teknologiske sider ved bruk av kunstig intelligens. På den positive siden gjør AI det enklere å lære og skape, selv for folk uten teknisk bakgrunn. Det kan gi flere muligheten til å uttrykke ideer og løse problemer.
+Samtidig ser jeg utfordringer knyttet til ansvar og eierskap. Hvem står egentlig bak koden når AI har skrevet store deler av den? Og hvordan skal man sikre at man forstår det man leverer, når så mye er generert automatisk?
+En annen etisk side handler om læring og kompetanse. Når AI gjør så mye for deg, lærer man kanskje mindre av selve prosessen. Jeg merket selv hvor lett det var å lene seg for mye på agentene. Derfor forsøkte jeg å bruke dem som en veileder – ikke som en erstatning for egen innsats.
+
+Avslutning
+Selv om jeg startet sent, og kanskje ikke blir helt ferdig med prosjektet, sitter jeg igjen med både stolthet og takknemlighet for at jeg ikke ga opp. Prosjektet har vært krevende, men jeg har lært mye om hvordan KI kan brukes i programmering og prosjektstyring. Jeg har også lært hvor viktig det er å være nysgjerrig, kritisk og tålmodig – og hvor stort potensial som ligger i å kombinere menneskelig kreativitet med kunstig intelligens.
+Og ja, jeg har også brukt AI her til å hjelpe meg med teksten. Det betyr derimot ikke at jeg ikke har tenkt og skrevet selv, det betyr bare at jeg får litt assistanse på veien. Litt som at vi har fjernlys. Vi klarer fint å kjøre med nærlys, men du verden så mye enklere det er med bedre opplyst vei. Spesielt om man har lyslist i tillegg.
+
+

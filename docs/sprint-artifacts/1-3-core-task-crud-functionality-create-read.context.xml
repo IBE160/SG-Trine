@@ -1,0 +1,107 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>3</storyId>
+    <title>Core Task CRUD Functionality (Create, Read)</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-3-core-task-crud-functionality-create-read.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to create new tasks and view my existing tasks</iWant>
+    <soThat>I can start organizing my responsibilities</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Backend Endpoints (AC 1.1, 1.2)**
+  - [ ] Create `POST /api/v1/tasks` endpoint in FastAPI.
+  - [ ] Add Pydantic model for task creation payload.
+  - [ ] Implement logic to save the new task to the Supabase `tasks` table for the authenticated user.
+  - [ ] Create `GET /api/v1/tasks` endpoint in FastAPI.
+  - [ ] Implement logic to retrieve all tasks for the authenticated user from the Supabase `tasks` table.
+
+- [ ] **Task 2: Implement Frontend Components (AC 1.1, 1.2, 1.3)**
+  - [ ] Create a `TaskInput` component using `shadcn/ui` for adding new tasks.
+  - [ ] Implement the "Quick Add" (+) floating action button as per the UX specification.
+  - [ ] Create a `TaskList` component to display the list of tasks.
+  - [ ] Ensure the components adhere to the "Hyper-Minimalism" principle from the UX design.
+
+- [ ] **Task 3: Integrate Frontend and Backend (AC 1.1, 1.2)**
+  - [ ] Implement state management for the task list (e.g., using Zustand or React Query/SWR).
+  - [ ] Wire up the `TaskInput` component to call the `POST /api/v1/tasks` endpoint on submit.
+  - [ ] Wire up the `TaskList` component to call the `GET /api/v1/tasks` endpoint when the component mounts.
+  - [ ] Ensure the task list in the UI updates automatically after a new task is created.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Task Creation:**
+    1.1. When a user enters a task title using the "Quick Add" button and submits, a `POST` request is sent to `/api/v1/tasks` and the new task appears in their list.
+2.  **Task Viewing:**
+    2.1. When a user navigates to a view that displays tasks, a `GET` request is made to `/api/v1/tasks` to fetch and display all their tasks.
+3.  **User Interface:**
+    3.1. The task list and input fields adhere to the "Hyper-Minimalism" principle from the UX design.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>4.2. API Design (RESTful)</section>
+        <snippet>Defines the base path `/api/v1` and the RESTful principles for the endpoints, including `/tasks`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>3.1 Proactive Dashboard</section>
+        <snippet>Describes the "Quick Add" button and the layout for displaying the main task list.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/main.py</path>
+        <description>Location for the FastAPI endpoints.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/app/page.tsx</path>
+        <description>Main application page where the task list will be displayed.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/task-input.tsx</path>
+        <description>Component for creating a new task.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/task-list.tsx</path>
+        <description>Component for displaying the list of tasks.</description>
+      </file>
+    </code>
+    <dependencies>
+        <ecosystem name="Node.js / Frontend">
+            <package name="zustand" comment="Optional, for state management" />
+            <package name="react-query" comment="Optional, as an alternative to Zustand for server state" />
+        </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- Must use `shadcn/ui` for frontend components.
+- API endpoints must be implemented in the FastAPI backend.
+- State management must handle asynchronous data fetching and updates.
+</constraints>
+  <interfaces>
+    <api type="REST">
+      <endpoint method="POST" path="/api/v1/tasks" />
+      <endpoint method="GET" path="/api/v1/tasks" />
+    </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the `TaskInput` component to ensure it calls the submission handler.
+    - Unit test the backend `POST /api/v1/tasks` endpoint to verify task creation and correct user association.
+    - Integration test the frontend to ensure creating a task updates the `TaskList`.
+    - E2E test the entire flow: user logs in, adds a task, and sees it in the list.
+  </ideas>
+  </tests>
+</story-context>

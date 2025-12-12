@@ -1,0 +1,101 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>5</storyId>
+    <title>Task Completion and Reordering</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-5-task-completion-and-reordering.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to mark tasks as complete and reorder them</iWant>
+    <soThat>I can manage my progress and prioritize visually</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Backend for Task Completion (AC 1.1)**
+  - [ ] Enhance the `PUT /api/v1/tasks/{task_id}` endpoint to handle updating the `is_completed` status.
+  - [ ] Ensure the endpoint can toggle the boolean value.
+
+- [ ] **Task 2: Implement Backend for Task Reordering (AC 1.2)**
+  - [ ] Add a `sort_order` integer column to the `tasks` table in Supabase.
+  - [ ] Create a new endpoint, e.g., `POST /api/v1/tasks/reorder`, that accepts a list of task IDs in their new order.
+  - [ ] Implement logic to update the `sort_order` for the affected tasks in a single transaction.
+
+- [ ] **Task 3: Implement Frontend for Task Completion (AC 1.1)**
+  - [ ] Add a checkbox to each task in the `TaskList` component.
+  - [ ] On click, call the `PUT` endpoint to update the `is_completed` status.
+  - [ ] Implement the "charging battery" progress visualization based on the completion status of tasks in the list, as per the UX spec.
+
+- [ ] **Task 4: Implement Frontend for Task Reordering (AC 1.2)**
+  - [ ] Integrate a drag-and-drop library (e.g., `react-beautiful-dnd` or `dnd-kit`) into the `TaskList` component.
+  - [ ] On drop, optimistically update the UI to reflect the new order.
+  - [ ] Call the `POST /api/v1/tasks/reorder` endpoint with the new order of task IDs.
+
+- [ ] **Task 5: Ensure Accessibility (AC 1.3)**
+    - [ ] Verify that all interactive elements (checkboxes, drag handles) are fully keyboard-accessible.
+    - [ ] Add appropriate ARIA labels and roles to the drag-and-drop components.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Task Completion:**
+    1.1. When a user clicks a task's checkbox, its `is_completed` status is toggled via a `PUT` request, and the "charging battery" visualization updates.
+2.  **Task Reordering:**
+    2.1. When a user drags and drops a task to a new position, the new order is persisted in the backend.
+3.  **Accessibility:**
+    3.1. All interactive elements for completion and reordering are clearly labeled and fully keyboard-accessible.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+        <doc>
+            <path>docs/architecture-2025-11-28.md</path>
+            <title>ibe160 - Scale Adaptive Architecture</title>
+            <section>4.1. Database Schema</section>
+            <snippet>Mentions the `is_completed` and `sort_order` columns on the `tasks` table.</snippet>
+        </doc>
+        <doc>
+            <path>docs/ux-design-specification.md</path>
+            <title>ibe160 UX Design Specification</title>
+            <section>4.2 Core Interaction Patterns - Task List</section>
+            <snippet>Details the drag-and-drop interaction for reordering and the "charging battery" visualization for progress.</snippet>
+        </doc>
+    </docs>
+    <code>
+      <file>
+        <path>nextjs-frontend/src/components/task-list.tsx</path>
+        <description>Main component to be enhanced with drag-and-drop functionality.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/progress-bar.tsx</path>
+        <description>New component for the "charging battery" visualization.</description>
+      </file>
+    </code>
+    <dependencies>
+        <ecosystem name="Node.js / Frontend">
+            <package name="react-beautiful-dnd" comment="Or dnd-kit, for drag-and-drop functionality" />
+        </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- The reordering operation should be robust and handle potential race conditions if multiple users are reordering simultaneously (though this is a low-priority edge case for now).
+- Drag-and-drop must have a keyboard-alternative for accessibility.
+</constraints>
+  <interfaces>
+      <api type="REST">
+          <endpoint method="PUT" path="/api/v1/tasks/{task_id}" comment="Enhanced to handle is_completed" />
+          <endpoint method="POST" path="/api/v1/tasks/reorder" />
+      </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the backend logic for reordering to ensure it correctly updates the `sort_order` column.
+    - Integration test the drag-and-drop feature to confirm the API call is made with the correct new order.
+    - Accessibility test: attempt to reorder tasks using only the keyboard.
+    - E2E test the completion and reordering flows.
+  </ideas>
+  </tests>
+</story-context>

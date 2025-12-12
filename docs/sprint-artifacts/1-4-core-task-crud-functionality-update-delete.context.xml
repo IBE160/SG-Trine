@@ -1,0 +1,102 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>4</storyId>
+    <title>Core Task CRUD Functionality (Update, Delete)</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-4-core-task-crud-functionality-update-delete.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to edit and delete my existing tasks</iWant>
+    <soThat>I can maintain an accurate and clutter-free task list</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Backend Endpoints (AC 1.1, 1.2)**
+  - [ ] Create `PUT /api/v1/tasks/{task_id}` endpoint in FastAPI for updating tasks.
+  - [ ] Add Pydantic model for task update payload.
+  - [ ] Implement logic to update the specified task in the Supabase `tasks` table.
+  - [ ] Create `DELETE /api/v1/tasks/{task_id}` endpoint in FastAPI for deleting tasks.
+  - [ ] Implement logic to delete the specified task from the Supabase `tasks` table.
+
+- [ ] **Task 2: Implement Frontend Components for Update/Delete (AC 1.1, 1.2)**
+  - [ ] Implement an inline editing feature for task items in the `TaskList` component.
+  - [ ] Implement the swipe gesture for deletion in the "Focused Task View" as per the UX design.
+  - [ ] Add a confirmation dialog for the delete action.
+
+- [ ] **Task 3: Implement Real-time Updates (AC 1.3)**
+  - [ ] Configure and subscribe to Supabase real-time updates for the `tasks` table in the frontend.
+  - [ ] Set up a listener that updates the local state (Zustand/React Query) when a change event (INSERT, UPDATE, DELETE) is received.
+  - [ ] Verify that changes made on one client are reflected on other connected clients without a manual refresh.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Task Update:**
+    1.1. When a user activates the inline edit function for a task and saves, a `PUT` request is sent to `/api/v1/tasks/{task_id}` and the task is updated in the UI.
+2.  **Task Deletion:**
+    2.1. When a user swipes a task card in the "Focused Task View" and confirms the action, a `DELETE` request is sent to `/api/v1/tasks/{task_id}` and the task is removed from the UI.
+3.  **Real-time Sync:**
+    3.1. When a task is updated or deleted, the change is reflected immediately on any other connected device viewing the same list without a manual refresh.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>6.1. Real-time & Asynchronous Operations</section>
+        <snippet>Specifies the use of Supabase Realtime for instant UI updates across clients.</snippet>
+      </doc>
+       <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>3.2 Focused Task View</section>
+        <snippet>Details the swipe gesture for task deletion.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/main.py</path>
+        <description>Location for the FastAPI `PUT` and `DELETE` endpoints.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/task-list-item.tsx</path>
+        <description>Component for a single task, to be enhanced with inline editing.</description>
+      </file>
+       <file>
+        <path>nextjs-frontend/src/app/store/task-store.ts</path>
+        <description>Zustand store (or equivalent) where the Supabase real-time subscription will be managed.</description>
+      </file>
+    </code>
+    <dependencies>
+        <ecosystem name="Node.js / Frontend">
+            <package name="@supabase/supabase-js" comment="For real-time subscriptions" />
+        </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- Real-time updates must be handled efficiently to avoid performance issues.
+- Deletion should have a confirmation step to prevent accidental data loss.
+</constraints>
+  <interfaces>
+    <api type="REST">
+      <endpoint method="PUT" path="/api/v1/tasks/{task_id}" />
+      <endpoint method="DELETE" path="/api/v1/tasks/{task_id}" />
+    </api>
+    <subscription type="WebSocket">
+      <channel>Supabase Realtime channel for the `tasks` table</channel>
+      <event>PostgreSQL CUD events</event>
+    </subscription>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the backend `PUT` and `DELETE` endpoints.
+    - Integration test the real-time functionality by running two separate test clients and verifying that a change on one is reflected on the other.
+    - E2E test the entire flow: user edits a task, user deletes a task.
+  </ideas>
+  </tests>
+</story-context>

@@ -1,0 +1,90 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>5</storyId>
+    <title>Smart, Gentle Nudge Reminders</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-5-smart-gentle-nudge-reminders.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to receive smart, context-aware nudge reminders</iWant>
+    <soThat>I can stay on track with my priorities without feeling overwhelmed (Post-MVP)</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Backend Background Job (AC 1.1)**
+  - [ ] Set up a scheduled task runner (e.g., `Inngest`, Celery, or a simple cron job) that runs periodically.
+  - [ ] The job will query for high-priority tasks that are approaching their due time.
+  - [ ] Implement AI logic in the backend to determine if a nudge is appropriate (e.g., considering user's recent activity, time of day).
+
+- [ ] **Task 2: Implement Notification Delivery (AC 1.1, 1.2)**
+  - [ ] Integrate a notification delivery service (e.g., Supabase for push notifications, or a simple in-app notification system).
+  - [ ] When the background job determines a nudge is needed, it will trigger the delivery of the notification.
+  - [ ] The notification payload should be gentle, non-judgmental, and contain a link back to the relevant task.
+
+- [ ] **Task 3: Implement Frontend Notification Handling (AC 1.2)**
+  - [ ] If using in-app notifications, create a toast notification system (e.g., using `react-hot-toast`).
+  - [ ] If using push notifications, implement a service worker to handle incoming notifications.
+  - [ ] When a notification is clicked, the user should be directed to the "Focused Task View" for that task.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Nudge Logic:**
+    1.1. The FastAPI backend service, using a background job and AI logic, identifies an appropriate moment to send a gentle, non-judgmental notification for a high-priority task approaching its due time.
+2.  **User Interaction:**
+    2.1. When a user receives and interacts with a notification, they are directed back to the relevant task within the application.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>6.2. Background Jobs & Scheduled Tasks</section>
+        <snippet>Recommends using a service like `Inngest` for managing background jobs and scheduled tasks required for features like smart reminders.</snippet>
+      </doc>
+       <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>7.1 Notifications & Nudges</section>
+        <snippet>Provides the design principles for the content and style of the nudge reminders.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/background_jobs/nudge_service.py</path>
+        <description>New module to contain the logic for the scheduled background job.</description>
+      </file>
+       <file>
+        <path>inngest/client.py</path>
+        <description>Configuration file for the Inngest client or other task scheduler.</description>
+      </file>
+    </code>
+    <dependencies>
+        <ecosystem name="Python / Backend">
+            <package name="inngest" comment="Or other task scheduling library like Celery" />
+        </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- This feature has significant backend complexity, requiring a reliable system for scheduled tasks.
+- The AI logic for determining "the right moment" is heuristic and will need iterative tuning.
+- Initial implementation might rely on simpler triggers (e.g., "1 hour before due") before more complex context-awareness is built.
+</constraints>
+  <interfaces>
+      <api type="Push">
+          <description>The system may send push notifications or in-app toasts to the user.</description>
+      </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the background job logic to ensure it correctly identifies tasks that need nudges.
+    - Integration test the notification delivery mechanism.
+    - Manually trigger a nudge for a test user and verify that the notification is received and functional.
+  </ideas>
+  </tests>
+</story-context>

@@ -1,0 +1,80 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>4</storyId>
+    <title>Integrated Visual Timers</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-4-integrated-visual-timers.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to initiate integrated visual timers for my tasks</iWant>
+    <soThat>I can maintain focus and manage my work sessions effectively (Post-MVP)</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Timer Component (AC 1.1)**
+  - [ ] Create a client-side `VisualTimer` component in React.
+  - [ ] This component will manage its own state (time remaining, running/paused).
+  - [ ] It should accept a duration (e.g., 25 minutes for a Pomodoro session).
+  - [ ] Display the countdown in a subtle, visual manner within the "Focused Task View".
+
+- [ ] **Task 2: Implement Timer Controls (AC 1.1)**
+  - [ ] Add controls (start, pause, reset) to the `VisualTimer` component.
+  - [ ] Integrate the component into the "Focused Task View".
+
+- [ ] **Task 3: Implement Gentle Notifications (AC 1.2)**
+  - [ ] When the timer completes, trigger a gentle, non-intrusive notification.
+  - [ ] This could be a subtle sound, a brief visual animation, or a browser toast notification.
+  - [ ] The notification should prompt the user to take a break or extend the session, and be easily dismissible.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Timer Functionality:**
+    1.1. When in the "Focused Task View", a user can activate a Pomodoro timer (e.g., 25 minutes), which displays a subtle, visual countdown.
+2.  **Completion Notification:**
+    2.1. When the timer session ends, a gentle, non-intrusive notification prompts the user to take a break or extend the session.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+        <doc>
+            <path>docs/ux-design-specification.md</path>
+            <title>ibe160 UX Design Specification</title>
+            <section>7.1 Notifications & Nudges</section>
+            <snippet>Defines the principles for notifications to be subtle, dismissible, and non-intrusive, which is critical for the timer completion alert.</snippet>
+        </doc>
+         <doc>
+            <path>docs/ux-design-specification.md</path>
+            <title>ibe160 UX Design Specification</title>
+            <section>3.2 Focused Task View</section>
+            <snippet>Specifies the integration of the visual timer within this view.</snippet>
+        </doc>
+    </docs>
+    <code>
+      <file>
+        <path>nextjs-frontend/src/components/visual-timer.tsx</path>
+        <description>The new component for the timer itself, including its controls and visual representation.</description>
+      </file>
+       <file>
+        <path>nextjs-frontend/src/app/task/[id]/page.tsx</path>
+        <description>The "Focused Task View" will be updated to include the `VisualTimer` component.</description>
+      </file>
+    </code>
+  </artifacts>
+
+  <constraints>
+- The timer must be purely client-side; no backend interaction is required for its core functionality.
+- Notifications should not require browser-level push notification permissions for this story; they can be in-app toasts or alerts.
+</constraints>
+  <interfaces></interfaces>
+  <tests>
+    <ideas>
+    - Component test the `VisualTimer` to ensure it counts down correctly and its controls work as expected.
+    - Test the notification logic to ensure it triggers at the end of a session.
+    - E2E test: user starts a timer, waits for it to finish (potentially with a very short duration for testing), and verifies the notification appears.
+  </ideas>
+  </tests>
+</story-context>

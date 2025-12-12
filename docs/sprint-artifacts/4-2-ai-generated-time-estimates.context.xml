@@ -1,0 +1,81 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>2</storyId>
+    <title>AI-Generated Time Estimates</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-2-ai-generated-time-estimates.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>the system to provide AI-generated time estimates for my tasks</iWant>
+    <soThat>I can better plan my day and manage my time blindness (Post-MVP)</soThat>
+    <tasks>
+- [ ] **Task 1: Enhance Backend AI Integration (AC 1.1)**
+  - [ ] Enhance the `ai_service` to include time estimation as part of its task analysis capabilities.
+  - [ ] When creating or analyzing a task, the service should prompt the Gemini API to return a time estimate in a structured format (e.g., minutes).
+  - [ ] This can be part of the same API call used for label generation or task breakdown.
+
+- [ ] **Task 2: Update Database Schema and Logic (AC 1.1)**
+  - [ ] Add a nullable `estimated_time_minutes` integer column to the `tasks` table.
+  - [ ] The backend will parse the time estimate from the Gemini API response and save it to this new column.
+
+- [ ] **Task 3: Implement Frontend Display (AC 1.2)**
+  - [ ] Enhance the `TaskListItem` component to display the estimated time.
+  - [ ] Format the time from minutes into a user-friendly string (e.g., "15 min", "1 hr 30 min").
+  - [ ] Ensure the UI handles tasks without an estimated time gracefully.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **AI Estimation:**
+    1.1. When a task is created or analyzed by the "Plan My Day" AI Workflow, the backend calls the Gemini API, which provides an approximate time estimate.
+2.  **UI Display:**
+    2.1. When a task has a time estimate, it is clearly displayed alongside the task title in the UI.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+        <doc>
+            <path>docs/architecture-2025-11-28.md</path>
+            <title>ibe160 - Scale Adaptive Architecture</title>
+            <section>4.1. Database Schema</section>
+            <snippet>Specifies the `estimated_time_minutes` column on the `tasks` table.</snippet>
+        </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/services/ai_service.py</path>
+        <description>Service module to be enhanced to request and parse time estimates from Gemini.</description>
+      </file>
+      <file>
+        <path>supabase/migrations/{timestamp}_add_time_estimate_to_tasks.sql</path>
+        <description>A new database migration file to add the `estimated_time_minutes` column.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/task-list-item.tsx</path>
+        <description>Component to be updated to display the time estimate.</description>
+      </file>
+    </code>
+  </artifacts>
+
+  <constraints>
+- The AI time estimates are suggestions and should be clearly labeled as such (e.g., "Approx. 15 min").
+- The feature should not be negatively impacted if the AI fails to provide an estimate.
+</constraints>
+  <interfaces>
+      <api type="Internal">
+        <description>The backend will make an API call to the Google Gemini API.</description>
+    </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the backend service to ensure it correctly parses time estimates from a mocked Gemini response.
+    - Component test the frontend to ensure it correctly formats and displays various time estimates (e.g., < 1hr, > 1hr).
+    - E2E test the flow of creating a task and seeing the AI-generated time estimate appear.
+  </ideas>
+  </tests>
+</story-context>

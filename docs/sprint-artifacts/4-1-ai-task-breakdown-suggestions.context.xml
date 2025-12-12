@@ -1,0 +1,85 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>1</storyId>
+    <title>AI Task Breakdown Suggestions</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-1-ai-task-breakdown-suggestions.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>the system to suggest breaking down large tasks into smaller sub-steps</iWant>
+    <soThat>I can reduce overwhelm and make daunting tasks manageable (Post-MVP)</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Backend Endpoint for Task Breakdown (AC 1.1)**
+  - [ ] Create a new endpoint, e.g., `POST /api/v1/tasks/{task_id}/breakdown`.
+  - [ ] This endpoint will take the ID of a large, unstructured task.
+  - [ ] It will call the `ai_service` to construct a detailed prompt for Gemini, asking it to decompose the task into smaller, actionable sub-steps.
+
+- [ ] **Task 2: Implement Database Logic for Sub-tasks (AC 1.2)**
+  - [ ] Ensure the `tasks` table has a nullable `parent_task_id` column to create hierarchical relationships.
+  - [ ] After receiving the sub-steps from Gemini, the backend will create new task entries for each sub-step.
+  - [ ] Each new sub-task will have its `parent_task_id` set to the ID of the original large task.
+
+- [ ] **Task 3: Implement Frontend UI for Suggestions (AC 1.1, 1.2)**
+  - [ ] Add a "Plan My Day" or "Breakdown Task" button to the UI for a selected task.
+  - [ ] When clicked, this button calls the new breakdown endpoint.
+  - [ ] Display the suggested sub-steps to the user in a clear, easy-to-read format (e.g., a modal or an inline expansion).
+  - [ ] Provide a "Confirm" button that, when clicked, adds the sub-steps to the user's task list.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **AI Suggestion:**
+    1.1. When a user triggers the "Plan My Day" AI Workflow for a large task, the backend calls the Gemini API, which generates a list of smaller, actionable sub-steps.
+2.  **Task Creation:**
+    2.1. When the user confirms the suggested sub-steps, they are added to the `tasks` table with their `parent_task_id` linked to the original task.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>7. AI Workflows</section>
+        <snippet>Describes the "Plan My Day" AI Workflow, which includes task decomposition as a key feature.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>4.1. Database Schema</section>
+        <snippet>Defines the `parent_task_id` column on the `tasks` table to support hierarchical task structures.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/main.py</path>
+        <description>The new `POST /api/v1/tasks/{task_id}/breakdown` endpoint will be added here.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/task-actions.tsx</path>
+        <description>A component or menu where the "Breakdown Task" button will be located.</description>
+      </file>
+    </code>
+  </artifacts>
+
+  <constraints>
+- The AI-generated sub-steps should be presented as suggestions for the user to approve, not added automatically.
+- The process should handle potential failures from the AI API gracefully.
+</constraints>
+  <interfaces>
+      <api type="REST">
+          <endpoint method="POST" path="/api/v1/tasks/{task_id}/breakdown" />
+      </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the backend endpoint to ensure it calls the AI service and correctly creates sub-tasks in the database upon confirmation.
+    - Mock the Gemini API to test the parsing and handling of the generated sub-steps.
+    - E2E test the full flow: user clicks "Breakdown Task", sees suggestions, confirms, and new sub-tasks appear in their list.
+  </ideas>
+  </tests>
+</story-context>

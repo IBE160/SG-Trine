@@ -1,0 +1,90 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>6</storyId>
+    <title>Scheduled Task Management</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-6-scheduled-task-management.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to schedule tasks for specific days</iWant>
+    <soThat>I can plan my workload and manage my commitments effectively (Post-MVP)</soThat>
+    <tasks>
+- [ ] **Task 1: Update Database Schema (AC 1.1)**
+  - [ ] Add a nullable `scheduled_date` column of type `timestamp with time zone` to the `tasks` table.
+  - [ ] Create and run the database migration.
+
+- [ ] **Task 2: Enhance Backend Endpoint (AC 1.1)**
+  - [ ] Enhance the `POST /api/v1/tasks` and `PUT /api/v1/tasks/{task_id}` endpoints to accept a `scheduled_date`.
+  - [ ] Update the Pydantic models to include the optional `scheduled_date` field.
+  - [ ] Ensure the backend logic correctly saves or updates this field.
+
+- [ ] **Task 3: Implement Frontend Date Picker (AC 1.1)**
+  - [ ] Integrate a date picker component (e.g., from `shadcn/ui`) into the task creation and editing forms.
+  - [ ] This will allow the user to select a specific date for the task.
+
+- [ ] **Task 4: Update "Today" View (AC 1.2)**
+  - [ ] Ensure the "Today" view (from Story 3.2) correctly filters and displays tasks where the `scheduled_date` is the current day.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Date Assignment:**
+    1.1. When creating or editing a task, the user can assign a specific `scheduled_date` to it via a UI date picker.
+2.  **View Integration:**
+    2.1. When the scheduled day arrives, the task is prominently displayed in relevant views (e.g., the "Today" view).
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>4.1. Database Schema</section>
+        <snippet>Defines the `scheduled_date` column on the `tasks` table.</snippet>
+      </doc>
+        <doc>
+        <path>docs/epics.md</path>
+        <title>ibe160 - Epic Breakdown</title>
+        <section>Story 3.2: "Today" View and Filtering</section>
+        <snippet>This story is a prerequisite for Story 3.2, as the "Today" view depends on the `scheduled_date` field.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>supabase/migrations/{timestamp}_add_scheduled_date_to_tasks.sql</path>
+        <description>A new database migration file to add the `scheduled_date` column.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/task-form.tsx</path>
+        <description>The form for creating/editing tasks, to be enhanced with a date picker.</description>
+      </file>
+    </code>
+    <dependencies>
+      <ecosystem name="Node.js / Frontend">
+        <package name="react-day-picker" comment="Often used with shadcn/ui for calendar components" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- Date and timezone handling must be consistent across the frontend and backend.
+</constraints>
+  <interfaces>
+      <api type="REST">
+          <endpoint method="POST" path="/api/v1/tasks" comment="Enhanced to accept scheduled_date" />
+          <endpoint method="PUT" path="/api/v1/tasks/{task_id}" comment="Enhanced to accept scheduled_date" />
+      </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the backend endpoints to ensure they correctly handle the `scheduled_date` field.
+    - Component test the date picker to ensure it correctly formats the date for the API.
+    - E2E test the full flow: schedule a task for a future date, change the system date to that day, reload the app, and verify the task appears in the "Today" view.
+  </ideas>
+  </tests>
+</story-context>

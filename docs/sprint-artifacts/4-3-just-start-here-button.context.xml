@@ -1,0 +1,84 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>3</storyId>
+    <title>"Just Start Here" Button</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-3-just-start-here-button.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to click a "Just Start Here" button to be directed to the single most important task</iWant>
+    <soThat>I can overcome decision paralysis and initiate work immediately (Post-MVP)</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Backend Endpoint for Next Task (AC 1.1, 1.2)**
+  - [ ] Create a new endpoint, `GET /api/v1/tasks/next-priority`.
+  - [ ] Implement the AI logic in the backend to determine the single most important and actionable task. This logic should consider factors like `priority`, `due_date`, `estimated_time_minutes`, and potentially user context.
+  - [ ] The endpoint should return a single task object.
+
+- [ ] **Task 2: Implement Frontend Button and View (AC 1.1, 1.2)**
+  - [ ] Add a prominent "Just Start Here" button to the "Proactive Dashboard".
+  - [ ] When clicked, this button will call the `GET /api/v1/tasks/next-priority` endpoint.
+  - [ ] Upon receiving the task object, the UI will transition to a "Focused Task View" for that specific task.
+  - [ ] The transition should be smooth and calming, as per the UX specification.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **API Logic:**
+    1.1. When the frontend makes a `GET` request to `/api/v1/tasks/next-priority`, the backend applies AI logic to identify and return the highest priority, most actionable task.
+2.  **UI Flow:**
+    2.1. When the user clicks the "Just Start Here" button, the UI transitions to a "Focused Task View" for the specific task returned by the backend.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>3.1 Proactive Dashboard</section>
+        <snippet>Details the placement and prominence of the "Just Start Here" button.</snippet>
+      </doc>
+        <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>3.2 Focused Task View</section>
+        <snippet>Describes the destination view for this interaction, emphasizing its calm and focused nature.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/main.py</path>
+        <description>The new `GET /api/v1/tasks/next-priority` endpoint will be added here.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/just-start-here-button.tsx</path>
+        <description>The new button component that triggers the workflow.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/app/task/[id]/page.tsx</path>
+        <description>The dynamic route for the "Focused Task View".</description>
+      </file>
+    </code>
+  </artifacts>
+
+  <constraints>
+- The backend logic for selecting the "next priority" task is complex and subjective; the initial implementation should be a best-effort based on available data points.
+- The system should handle the case where there are no actionable tasks available.
+</constraints>
+  <interfaces>
+      <api type="REST">
+          <endpoint method="GET" path="/api/v1/tasks/next-priority" />
+      </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the backend logic with various sets of tasks to ensure it selects the expected "next priority" task.
+    - Integration test the button click to ensure it fetches a task and correctly redirects the user to the focused view.
+    - E2E test the full user flow.
+  </ideas>
+  </tests>
+</story-context>

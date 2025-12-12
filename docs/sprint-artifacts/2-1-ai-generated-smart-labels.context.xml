@@ -4,7 +4,7 @@
     <storyId>1</storyId>
     <title>AI-Generated Smart Labels</title>
     <status>drafted</status>
-    <generatedAt>2025-11-30</generatedAt>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
     <generator>BMAD Story Context Workflow</generator>
     <sourceStoryPath>docs/sprint-artifacts/2-1-ai-generated-smart-labels.md</sourceStoryPath>
   </metadata>
@@ -14,84 +14,80 @@
     <iWant>the system to automatically generate smart labels for my tasks</iWant>
     <soThat>I can quickly categorize and understand my tasks at a glance</soThat>
     <tasks>
-      <task id="1">Backend - Database Schema</task>
-      <task id="2">Backend - AI Integration Service</task>
-      <task id="3">Backend - Task Creation/Update Workflow</task>
-      <task id="4">Frontend - Display Labels</task>
-      <task id="5">Testing</task>
+- [ ] **Task 1: Implement Backend AI Integration (AC 1.1, 1.2, 1.3)**
+  - [ ] Create a new FastAPI endpoint or a background task service for handling AI processing.
+  - [ ] This service will take a task's title and description as input.
+  - [ ] It will construct a structured prompt for the Gemini API, asking for relevant labels.
+  - [ ] The call to the Gemini API MUST be made from the backend to protect the API key.
+  - [ ] Implement robust error handling: If the API call fails, the task is still created without labels, and the error is logged.
+
+- [ ] **Task 2: Update Database Schema and Logic (AC 1.2)**
+  - [ ] Create a `labels` table for unique label names.
+  - [ ] Create a `task_labels` join table to create a many-to-many relationship between tasks and labels.
+  - [ ] After the Gemini API returns labels, the backend will parse the response and populate these tables accordingly.
+
+- [ ] **Task 3: Implement Frontend Display (AC 1.4)**
+  - [ ] Enhance the `TaskList` and `TaskListItem` components to display labels associated with a task.
+  - [ ] Display the labels as distinct visual elements (e.g., tags or badges).
+  - [ ] The UI should gracefully handle tasks that do not have any labels.
     </tasks>
   </story>
 
   <acceptanceCriteria>
-    <criterion id="1">Given I create or edit a task, when the backend saves the task, then it asynchronously calls the Gemini API with a structured prompt for label generation.</criterion>
-    <criterion id="2">Given the Gemini API returns valid labels, when the backend processes the response, then it populates the `labels` and `task_labels` tables in the database. (Covers FR8)</criterion>
-    <criterion id="3">Given the Gemini API call fails or returns invalid data, when the backend handles the error, then the task is still created successfully without any labels, and the error is logged.</criterion>
-    <criterion id="4">Given a task has labels, when the frontend displays the task, then the labels are shown as distinct visual elements (e.g., tags or badges).</criterion>
+1.  **AI Label Generation:**
+    1.1. When a task is created or edited, the backend asynchronously calls the Gemini API with a structured prompt for label generation.
+    1.2. On a successful API response, the backend populates the `labels` and `task_labels` tables in the database.
+    1.3. If the AI call fails, the task is still created successfully without any labels, and the error is logged.
+2.  **UI Display:**
+    2.1. When a task with labels is displayed in the frontend, the labels are shown as distinct visual elements (e.g., tags or badges).
   </acceptanceCriteria>
 
   <artifacts>
     <docs>
-      <artifact>
-        <path>docs/prd.md</path>
-        <title>Product Requirements Document</title>
-        <section>Functional Requirements</section>
-        <snippet>FR8: The system automatically generates smart labels (e.g., "work," "personal," "urgent") for tasks using AI.</snippet>
-      </artifact>
-      <artifact>
-        <path>docs/prd.md</path>
-        <title>Product Requirements Document</title>
-        <section>Innovation &amp; Novel Patterns</section>
-        <snippet>AI-Powered Task Intelligence: Leveraging Gemini 2.5 Pro for automatic categorization and priority suggestions...</snippet>
-      </artifact>
-      <artifact>
+      <doc>
         <path>docs/architecture-2025-11-28.md</path>
         <title>ibe160 - Scale Adaptive Architecture</title>
-        <section>3.1. Critical Architectural Decisions</section>
-        <snippet>AI Integration: The FastAPI backend will exclusively handle calls to the Gemini 2.5 Pro API, managing prompts and implementing robust error handling and fallbacks.</snippet>
-      </artifact>
-      <artifact>
-        <path>docs/epics.md</path>
-        <title>ibe160 - Epic Breakdown</title>
-        <section>Story 2.1: AI-Generated Smart Labels</section>
-        <snippet>As a user, I want the system to automatically generate smart labels for my tasks, so that I can quickly categorize and understand my tasks at a glance.</snippet>
-      </artifact>
+        <section>4.3. AI Integration Strategy</section>
+        <snippet>Specifies that all AI (Gemini) calls must be made from the secure backend to protect API keys.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>4.1. Database Schema</section>
+        <snippet>Defines the many-to-many relationship for tasks and labels using `tasks`, `labels`, and `task_labels` tables.</snippet>
+      </doc>
     </docs>
-    <code></code>
-    <dependencies></dependencies>
+    <code>
+      <file>
+        <path>api/app/services/ai_service.py</path>
+        <description>New service module in the backend to handle all interactions with the Gemini API.</description>
+      </file>
+       <file>
+        <path>api/app/main.py</path>
+        <description>The task creation/update endpoints will trigger the AI service asynchronously.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/task-list-item.tsx</path>
+        <description>Component to be updated to display the label badges.</description>
+      </file>
+    </code>
   </artifacts>
 
   <constraints>
-      <constraint>All calls to the Gemini 2.5 Pro API MUST be made from the FastAPI backend to protect the API key.</constraint>
-      <constraint>The database schema will use a `labels` table for unique label names and a `task_labels` join table.</constraint>
-      <constraint>If the AI call for label generation fails, the task creation itself must not fail; the error should be logged and the task created without labels.</constraint>
-    </constraints>
+- The AI API key must never be exposed to the frontend.
+- Failure in the AI label generation process must not block the core task creation/update functionality.
+</constraints>
   <interfaces>
-      <interface>
-        <name>Create Task</name>
-        <kind>REST endpoint</kind>
-        <signature>POST /api/v1/tasks</signature>
-        <path>api/app/main.py</path>
-        <reason>Label generation is triggered by this endpoint.</reason>
-      </interface>
-      <interface>
-        <name>Update Task</name>
-        <kind>REST endpoint</kind>
-        <signature>PUT /api/v1/tasks/{task_id}</signature>
-        <path>api/app/main.py</path>
-        <reason>Label generation can also be triggered by this endpoint.</reason>
-      </interface>
-    </interfaces>
+    <api type="Internal">
+        <description>The backend will make an API call to the Google Gemini API.</description>
+    </api>
+  </interfaces>
   <tests>
-      <standards>The testing strategy involves unit tests for backend services (especially the AI integration service), integration tests for the full task creation flow with label generation, and frontend component tests to verify display.</standards>
-      <locations>
-        <location>nextjs-frontend/src/__tests__/</location>
-        <location>api/tests/</location>
-      </locations>
-      <ideas>
-        <idea for="AC1">Write a unit test for the AI integration service that mocks the Gemini API and verifies the correct prompt is generated.</idea>
-        <idea for="AC2">Write an integration test that creates a task and verifies the `labels` and `task_labels` tables are populated correctly.</idea>
-        <idea for="AC3">Write a unit test for the AI service that simulates a Gemini API failure and verifies the task is still created successfully.</idea>
-        <idea for="AC4">Write a frontend component test for the Task component to verify it correctly renders labels when present.</idea>
-      </ideas>
-    </tests>
+    <ideas>
+    - Unit test the AI service to ensure it constructs the correct prompt for the Gemini API.
+    - Mock the Gemini API response to test the backend logic for populating the database tables.
+    - Test the error handling path where the Gemini API call fails.
+    - Component test the `TaskListItem` to verify it correctly displays labels or an empty state.
+  </ideas>
+  </tests>
 </story-context>

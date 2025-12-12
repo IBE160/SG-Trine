@@ -1,0 +1,78 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>3</storyId>
+    <title>Filter Tasks by Smart Labels</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-3-filter-tasks-by-smart-labels.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to filter my tasks by their smart labels</iWant>
+    <soThat>I can quickly find and focus on specific categories of tasks</soThat>
+    <tasks>
+- [ ] **Task 1: Enhance Backend Endpoint for Filtering (AC 1.1)**
+  - [ ] Enhance the `GET /api/v1/tasks` endpoint to accept an optional `label` query parameter.
+  - [ ] Implement the database query to perform a join with `task_labels` and `labels` to filter tasks based on the provided label.
+  - [ ] Ensure the endpoint still returns all tasks when the `label` parameter is not provided.
+
+- [ ] **Task 2: Implement Frontend Filtering UI (AC 1.1, 1.2, 1.3)**
+  - [ ] Create a `LabelFilter` component that displays a list of unique labels available to the user.
+  - [ ] When a user clicks on a label, the component will trigger a refetch of the task list, adding the `?label=<label_name>` query parameter to the API call.
+  - [ ] Manage the state of the current filter.
+  - [ ] Add a "Clear" or "All" button to remove the filter and show all tasks.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **API Filtering:**
+    1.1. When the frontend makes a `GET` request to `/api/v1/tasks?label=work`, the API returns only tasks with the "work" label.
+2.  **UI Interaction:**
+    2.1. When a user clicks on a label tag in the UI, the task list updates to show only tasks with that label.
+    2.2. When a user clicks a "Clear" or "All" button, the full task list is restored.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>4.2. API Design (RESTful)</section>
+        <snippet>Implies that GET endpoints can be enhanced with query parameters for filtering.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/main.py</path>
+        <description>The `GET /api/v1/tasks` endpoint in this file will be enhanced.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/label-filter.tsx</path>
+        <description>New component to display and manage label filters.</description>
+      </file>
+       <file>
+        <path>nextjs-frontend/src/app/page.tsx</path>
+        <description>The main page will be updated to include the `LabelFilter` component and handle the filtered data.</description>
+      </file>
+    </code>
+  </artifacts>
+
+  <constraints>
+- Filtering should be performant, even with a large number of tasks and labels. The database query should be indexed appropriately.
+</constraints>
+  <interfaces>
+      <api type="REST">
+          <endpoint method="GET" path="/api/v1/tasks?label={label_name}" comment="Enhanced to filter by label" />
+      </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the enhanced backend endpoint to verify it returns correctly filtered results.
+    - Component test the `LabelFilter` to ensure it triggers API calls with the correct parameters.
+    - Integration test the entire flow: click a label, see the list update, clear the filter, see the full list return.
+  </ideas>
+  </tests>
+</story-context>

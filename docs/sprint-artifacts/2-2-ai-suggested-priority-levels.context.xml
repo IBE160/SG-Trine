@@ -1,0 +1,81 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2</storyId>
+    <title>AI-Suggested Priority Levels</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-2-ai-suggested-priority-levels.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>the system to automatically suggest a priority level for my tasks</iWant>
+    <soThat>I can focus on what's most important and reduce decision fatigue</soThat>
+    <tasks>
+- [ ] **Task 1: Enhance Backend AI Integration (AC 1.1, 1.2)**
+  - [ ] Enhance the `ai_service.py` to include a function for priority suggestion.
+  - [ ] The service will construct a structured prompt for the Gemini API, asking for a priority level (e.g., an integer from 1 to 4).
+  - [ ] The task creation/update process will asynchronously call this new function.
+  - [ ] After the Gemini API returns a priority level, the backend will parse the response and update the `priority` field on the `tasks` table.
+
+- [ ] **Task 2: Implement Frontend Display (AC 1.3)**
+  - [ ] Enhance the `TaskListItem` component to visually indicate the priority of a task.
+  - [ ] Use a colored icon or border corresponding to the priority level (e.g., 4=red, 3=orange, 2=blue, 1=gray).
+  - [ ] The UI should gracefully handle tasks that do not have a priority level.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **AI Priority Suggestion:**
+    1.1. When a task is created or edited, the backend asynchronously calls the Gemini API with a structured prompt for a priority suggestion.
+    1.2. On a successful API response, the backend updates the `priority` field for the task in the database.
+2.  **UI Display:**
+    2.1. When a task has a priority, the frontend clearly indicates it with a visual cue (e.g., a colored icon or border).
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>4.1. Database Schema</section>
+        <snippet>Defines the `priority` integer column on the `tasks` table.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>4.2 Core Interaction Patterns - Task List</section>
+        <snippet>Mentions the visual language for indicating task priority.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/services/ai_service.py</path>
+        <description>Service module to be enhanced with a priority suggestion function.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/task-list-item.tsx</path>
+        <description>Component to be updated to display the priority indicator.</description>
+      </file>
+    </code>
+  </artifacts>
+
+  <constraints>
+- The AI call for priority suggestion should not block the main task creation/update thread.
+- The priority levels should be consistently represented in the UI.
+</constraints>
+  <interfaces>
+      <api type="Internal">
+        <description>The backend will make an API call to the Google Gemini API.</description>
+    </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the AI service to ensure it constructs the correct prompt for priority suggestion.
+    - Mock the Gemini API response to test the backend logic for updating the `priority` field.
+    - Component test the `TaskListItem` to verify it correctly displays the different priority indicators.
+  </ideas>
+  </tests>
+</story-context>

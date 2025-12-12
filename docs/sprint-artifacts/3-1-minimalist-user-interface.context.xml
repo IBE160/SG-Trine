@@ -1,0 +1,85 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>1</storyId>
+    <title>Minimalist User Interface</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-1-minimalist-user-interface.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to interact with a clean, minimal, and intuitive user interface</iWant>
+    <soThat>I can focus on my tasks without distractions</soThat>
+    <tasks>
+- [ ] **Task 1: Apply Core Visual Theme (AC 1.1, 1.2)**
+  - [ ] Configure Tailwind CSS to implement the "Refined Focus" color theme from the UX Design Specification.
+  - [ ] Ensure the neutral palette and specified action colors are used for all base components (`body`, `headings`, `buttons`, `inputs`).
+  - [ ] Apply the principles of hyper-minimalism and calm aesthetics to the "Proactive Dashboard" and "Focused Task View" layouts.
+
+- [ ] **Task 2: Implement Responsive Layouts (AC 1.3)**
+  - [ ] Use Tailwind's responsive breakpoints (`sm`, `md`, `lg`, `xl`) to adapt the layout for different screen sizes.
+  - [ ] Verify that the main UI elements, particularly the dashboard widgets, reflow correctly from a single column on mobile to a grid on desktop, as defined in the UX spec.
+
+- [ ] **Task 3: Ensure Component Styling Consistency (AC 1.2)**
+    - [ ] Review all existing `shadcn/ui` components to ensure they correctly inherit and apply the "Refined Focus" theme.
+    - [ ] Verify that visual feedback on interaction (hover, focus, click) is subtle and non-distracting.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Aesthetic and Layout:**
+    1.1. The "Proactive Dashboard" and "Focused Task View" layouts adhere to the principles of hyper-minimalism and calm aesthetics defined in the UX Design Specification.
+    1.2. The application's "Refined Focus" theme is correctly applied, using the specified neutral palette and action colors for all UI elements.
+2.  **Responsiveness:**
+    2.1. The UI layout adapts responsively from mobile to desktop screen sizes, with elements reflowing as defined in the UX spec.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>2. Visual Design - "Refined Focus" Theme</section>
+        <snippet>Defines the color palette, typography, and spacing for the application's minimalist aesthetic.</snippet>
+      </doc>
+       <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>3. Layout &amp; Responsiveness</section>
+        <snippet>Provides the detailed specifications for the responsive grid and how components should reflow across different breakpoints.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>nextjs-frontend/tailwind.config.js</path>
+        <description>The primary configuration file for defining the color theme and other Tailwind CSS settings.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/app/globals.css</path>
+        <description>Global stylesheet where base styles and theme variables are applied.</description>
+      </file>
+    </code>
+    <dependencies>
+        <ecosystem name="Node.js / Frontend">
+            <package name="tailwindcss" />
+            <package name="shadcn/ui" />
+        </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- All styling must be done using Tailwind CSS utility classes or `globals.css` for base styles; no other CSS methodologies should be introduced.
+- The implementation must strictly follow the visual and layout specifications in the UX Design Specification document.
+</constraints>
+  <interfaces></interfaces>
+  <tests>
+    <ideas>
+    - Visual regression testing (e.g., using Playwright's screenshot capabilities) to compare the implemented UI against design mockups at various breakpoints.
+    - Manual testing across different browsers and devices to verify responsive behavior.
+    - E2E tests that navigate the application and assert that key elements are visible and correctly styled.
+  </ideas>
+  </tests>
+</story-context>

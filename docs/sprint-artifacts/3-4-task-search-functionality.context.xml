@@ -1,0 +1,85 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>4</storyId>
+    <title>Task Search Functionality</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-4-task-search-functionality.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to search for tasks by keywords</iWant>
+    <soThat>I can quickly find specific tasks within my list (Post-MVP)</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Backend Search Endpoint (AC 1.1)**
+  - [ ] Create a dedicated `GET /api/v1/tasks/search` endpoint in FastAPI.
+  - [ ] This endpoint will accept a query parameter `q`.
+  - [ ] Implement the search logic using PostgreSQL's Full-Text Search (FTS) capabilities on the `tasks` table.
+
+- [ ] **Task 2: Configure Database for FTS (AC 1.1)**
+  - [ ] Add a `tsvector` column to the `tasks` table.
+  - [ ] Create a database trigger to automatically update the `tsvector` column whenever a task's title or description is inserted or updated.
+  - [ ] Create a GIN index on the `tsvector` column to make searches fast.
+
+- [ ] **Task 3: Implement Frontend Search UI (AC 1.1, 1.2, 1.3)**
+  - [ ] Create a `SearchInput` component.
+  - [ ] Implement debouncing on the user's input to avoid sending excessive API requests while typing.
+  - [ ] When the debounced query changes, call the `GET /api/v1/tasks/search?q={query}` endpoint.
+  - [ ] Display the search results in the `TaskList` component.
+  - [ ] When the search input is cleared, restore the full task list by calling the standard `GET /api/v1/tasks` endpoint.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **API Search:**
+    1.1. When the frontend sends a `GET` request to `/api/v1/tasks/search?q={query}`, the backend responds with only the tasks that match the search query.
+2.  **UI Interaction:**
+    2.1. As the user types in the search bar, the UI dynamically updates to show only relevant tasks.
+    2.2. When the user clears the search bar, the full task list is restored.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture-2025-11-28.md</path>
+        <title>ibe160 - Scale Adaptive Architecture</title>
+        <section>5.3. Advanced Features - Full-Text Search</section>
+        <snippet>Provides the technical specification for implementing Full-Text Search with PostgreSQL, including the need for a `tsvector` column, triggers, and a GIN index.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/main.py</path>
+        <description>The new `GET /api/v1/tasks/search` endpoint will be added here.</description>
+      </file>
+      <file>
+        <path>supabase/migrations/{timestamp}_enable_fts_on_tasks.sql</path>
+        <description>A new database migration file to set up the FTS capabilities on the `tasks` table.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/search-input.tsx</path>
+        <description>New component for the search bar, including debounce logic.</description>
+      </file>
+    </code>
+  </artifacts>
+
+  <constraints>
+- Full-Text Search implementation is specific to PostgreSQL and will require writing raw SQL for the migration.
+- The search query on the backend must be sanitized to prevent SQL injection vulnerabilities.
+</constraints>
+  <interfaces>
+      <api type="REST">
+          <endpoint method="GET" path="/api/v1/tasks/search?q={query}" />
+      </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the backend search endpoint to ensure it returns correct results for various queries.
+    - Integration test the debounce logic in the `SearchInput` component.
+    - E2E test the full search flow: user types a query, list updates, user clears query, list resets.
+  </ideas>
+  </tests>
+</story-context>

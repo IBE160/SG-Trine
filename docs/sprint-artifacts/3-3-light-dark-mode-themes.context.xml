@@ -1,0 +1,83 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>3</storyId>
+    <title>Light/Dark Mode Themes</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-3-light-dark-mode-themes.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to switch between light and dark mode themes</iWant>
+    <soThat>I can customize the application's appearance to my preference and reduce eye strain (Post-MVP)</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Theme Toggling Logic (AC 1.1, 1.2)**
+  - [ ] Use a library like `next-themes` or a custom React Context provider to manage the theme state (light/dark).
+  - [ ] Create a `ThemeToggleButton` component that allows the user to switch the theme.
+  - [ ] Ensure the chosen theme is persisted in the browser's local storage so it's remembered on subsequent visits.
+
+- [ ] **Task 2: Configure Tailwind for Dark Mode (AC 1.3)**
+  - [ ] In `tailwind.config.js`, enable dark mode using the `class` strategy.
+  - [ ] Define the dark mode color palette for the "Refined Focus" theme in the Tailwind config.
+  - [ ] Use `dark:` variants throughout the application to apply the dark mode styles.
+
+- [ ] **Task 3: Verify Component Theming (AC 1.3)**
+  - [ ] Review all `shadcn/ui` components and custom components to ensure they adapt correctly when the theme is switched.
+  - [ ] Manually test the application in both light and dark modes to check for any unstyled or poorly styled elements.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Theme Switching:**
+    1.1. When a user activates the theme toggle, the application's visual theme switches between "Refined Focus" Light and Dark modes.
+    1.2. The user's chosen theme is remembered and automatically applied on subsequent visits.
+2.  **Visual Correctness:**
+    2.1. All UI components and styled elements adapt correctly to the selected theme without any visual glitches.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>2. Visual Design - "Refined Focus" Theme</section>
+        <snippet>Provides the specific color values for both the Light and Dark mode variations of the theme.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>nextjs-frontend/tailwind.config.js</path>
+        <description>To be configured with `darkMode: 'class'` and the dark theme colors.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/theme-provider.tsx</path>
+        <description>A new component to provide the theme context to the entire application.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/components/theme-toggle-button.tsx</path>
+        <description>A new button component for switching themes.</description>
+      </file>
+    </code>
+    <dependencies>
+        <ecosystem name="Node.js / Frontend">
+            <package name="next-themes" comment="Recommended library for handling theme switching in Next.js" />
+        </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- The theme implementation should leverage CSS variables to make switching efficient and clean.
+- The solution should respect the user's OS-level preference (`prefers-color-scheme`) as the default setting.
+</constraints>
+  <interfaces></interfaces>
+  <tests>
+    <ideas>
+    - Component test the `ThemeToggleButton` to ensure it correctly toggles the theme state.
+    - Visual regression testing to capture screenshots of key pages in both light and dark modes.
+    - E2E test: user switches theme, reloads the page, and verifies the chosen theme is still active.
+  </ideas>
+  </tests>
+</story-context>

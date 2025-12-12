@@ -1,0 +1,84 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>2</storyId>
+    <title>"Today" View and Filtering</title>
+    <status>drafted</status>
+    <generatedAt>fredag 12. desember 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-2-today-view-and-filtering.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>to see a dedicated "Today" view as the default screen</iWant>
+    <soThat>I can immediately focus on my most urgent daily tasks (Post-MVP)</soThat>
+    <tasks>
+- [ ] **Task 1: Enhance Backend Endpoint for Date Filtering (AC 1.1, 1.2)**
+  - [ ] Enhance the `GET /api/v1/tasks` endpoint to accept a `date` query parameter (e.g., `?date=today`).
+  - [ ] Implement backend logic to filter tasks where `scheduled_date` matches the current date.
+  - [ ] This requires the `scheduled_date` column from story 4.6 to be available on the `tasks` table.
+
+- [ ] **Task 2: Implement "Proactive Dashboard" as Default View (AC 1.1)**
+  - [ ] Set up the main application page (`/`) to render the "Proactive Dashboard" component.
+  - [ ] By default, this component should fetch tasks for the "Today" view by calling `GET /api/v1/tasks?date=today`.
+
+- [ ] **Task 3: Ensure Full Functionality in "Today" View (AC 1.3)**
+  - [ ] Verify that all existing core task management functionalities (Create, Read, Update, Delete, Complete, Reorder) work correctly within the "Today" view.
+  - [ ] Ensure that adding a new task without a date does not make it appear in the "Today" view unless it's explicitly scheduled for today.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Default View:**
+    1.1. When a user opens the application, the default view presented is the "Proactive Dashboard" which contains the "Today" view.
+2.  **Content Filtering:**
+    2.1. The "Today" view shows a curated list of tasks scheduled for the current day.
+3.  **Functionality:**
+    3.1. All core task management functionalities (CRUD, complete, reorder) are available and function correctly within the "Today" view.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>ibe160 UX Design Specification</title>
+        <section>3.1 Proactive Dashboard</section>
+        <snippet>Describes the "Today" view as the central and default component of the user's experience.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>ibe160 - Epic Breakdown</title>
+        <section>Story 4.6: Scheduled Task Management</section>
+        <snippet>This story has a dependency on the `scheduled_date` field being implemented as part of Story 4.6.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>api/app/main.py</path>
+        <description>The `GET /api/v1/tasks` endpoint will be enhanced to support date-based filtering.</description>
+      </file>
+      <file>
+        <path>nextjs-frontend/src/app/page.tsx</path>
+        <description>The main page component that will fetch and display the "Today" view by default.</description>
+      </file>
+    </code>
+  </artifacts>
+
+  <constraints>
+- This story depends on the implementation of `scheduled_date` from Story 4.6. If 4.6 is not implemented, this story can only be partially completed (UI layout without data).
+- The date filtering logic must correctly handle timezones to ensure "today" is accurate for all users.
+</constraints>
+  <interfaces>
+      <api type="REST">
+          <endpoint method="GET" path="/api/v1/tasks?date=today" comment="Enhanced to filter by date" />
+      </api>
+  </interfaces>
+  <tests>
+    <ideas>
+    - Unit test the backend endpoint with a mocked date to ensure it returns only tasks for that specific day.
+    - Integration test the frontend to verify that on load, it calls the correct API endpoint and displays the correct tasks.
+    - E2E test the flow of scheduling a task for today and seeing it appear in the default view.
+  </ideas>
+  </tests>
+</story-context>

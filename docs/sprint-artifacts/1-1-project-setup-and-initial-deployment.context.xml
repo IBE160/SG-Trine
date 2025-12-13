@@ -85,7 +85,16 @@
         <snippet>Confirms the selection of `shadcn/ui` and its integration with Tailwind CSS and Next.js, which is essential information for the frontend setup.</snippet>
       </doc>
     </docs>
-    <code></code>
+    <code>
+      <file>
+        <path>nextjs-frontend/package.json</path>
+        <description>Defines all Node.js dependencies and scripts for the frontend application.</description>
+      </file>
+      <file>
+        <path>api/requirements.txt</path>
+        <description>Defines the Python dependencies for the FastAPI backend.</description>
+      </file>
+    </code>
     <dependencies>
       <ecosystem name="Node.js / Frontend">
         <package name="next" version="latest" />
